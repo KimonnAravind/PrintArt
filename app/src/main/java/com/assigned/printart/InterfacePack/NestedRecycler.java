@@ -4,6 +4,5 @@ import android.view.View;
 
 public interface NestedRecycler
 {
-
-        void onClick(View view, boolean isLongPressed);
+    void onClick(View view, boolean isLongPressed);
     }

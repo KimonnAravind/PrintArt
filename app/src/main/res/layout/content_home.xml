@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <ImageView
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/vp"
                 android:layout_width="match_parent"
                 android:layout_height="175dp"
                 android:src="@color/flp"

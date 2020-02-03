@@ -2,17 +2,17 @@ package com.assigned.printart;
 
 import android.os.Bundle;
 
+import com.assigned.printart.Adapter.Adapter;
+import com.assigned.printart.FirebListen.FirebaseViewer;
 import com.assigned.printart.Model.DisplayProducts;
+import com.assigned.printart.Model.Movies;
 import com.assigned.printart.Model.NestedDisplay;
-import com.assigned.printart.Model.Products;
-import com.assigned.printart.Viewer.DisplayProduct;
+import com.assigned.printart.Transform.Transformer;
 import com.assigned.printart.Viewer.DisplayProductsViewHolder;
 import com.assigned.printart.Viewer.NestedDisplayViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
+import com.assigned.printart.FirebListen.FirebaseViewer;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -23,9 +23,11 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -33,16 +35,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
     private AppBarConfiguration mAppBarConfiguration;
     private DatabaseReference ProRef;
+    ViewPager viewPager;
+    Adapter myadapter;
+    FirebaseViewer firebaseViewer;
     FirebaseDatabase database;
     DatabaseReference reference;
+    DatabaseReference movies;
     private RecyclerView /*recyclerView,*/ recyclerView;
     FirebaseRecyclerAdapter<DisplayProducts, DisplayProductsViewHolder>adapter;
     FirebaseRecyclerAdapter<NestedDisplay, NestedDisplayViewHolder>adapter1;
@@ -54,6 +65,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         //ProRef= FirebaseDatabase.getInstance().getReference().child("Products");
+        movies=FirebaseDatabase.getInstance().getReference().child("Movies");
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         manager=new LinearLayoutManager(this);
@@ -61,7 +75,11 @@ public class HomeActivity extends AppCompatActivity {
         reference=database.getReference("Category");
         recyclerView=findViewById(R.id.recyclerViewer);
         recyclerView.setLayoutManager(manager);
+        firebaseViewer=this;
 
+        loadmovies();
+        viewPager = (ViewPager)findViewById(R.id.vp);
+        viewPager.setPageTransformer(true,new Transformer());
         FirebaseRecyclerOptions<DisplayProducts> options = new FirebaseRecyclerOptions.Builder<DisplayProducts>()
                 .setQuery(reference,DisplayProducts.class).build();
 
@@ -141,6 +159,24 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView1.setLayoutManager(layoutManager1);*/
     }
 
+    private void loadmovies() {
+    movies.addListenerForSingleValueEvent(new ValueEventListener() {
+        List<Movies> moviesList= new ArrayList<>();
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for(DataSnapshot moviesnapshot:dataSnapshot.getChildren())
+            moviesList.add(moviesnapshot.getValue(Movies.class));
+            firebaseViewer.Loadsuccess(moviesList);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        firebaseViewer.Loadfailed(databaseError.getMessage());
+        }
+    });
+    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -153,6 +189,20 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void Loadsuccess(List<Movies> moviesList)
+    {
+        myadapter= new Adapter(this,moviesList);
+        viewPager.setAdapter(myadapter);
+
+    }
+
+    @Override
+    public void Loadfailed(String string)
+    {
+        Toast.makeText(this, ""+string, Toast.LENGTH_SHORT).show();
     }
 
     /*@Override
@@ -186,6 +236,7 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }*/
+
 
 
 }
