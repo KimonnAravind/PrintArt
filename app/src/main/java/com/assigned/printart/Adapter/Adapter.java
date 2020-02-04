@@ -68,7 +68,6 @@ public class Adapter extends PagerAdapter
         Picasso.get().load(moviesList.get(position).getImage()).into( movie_images);
         movie_name.setText(moviesList.get(position).getName());
         movie_description.setText(moviesList.get(position).getDescription());
-
         container.addView(view);
         return view;
     }

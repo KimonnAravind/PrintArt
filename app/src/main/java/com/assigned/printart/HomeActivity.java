@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
     private AppBarConfiguration mAppBarConfiguration;
     private DatabaseReference ProRef;
-    ViewPager viewPager;
+    ViewPager viewPager,viewPager1,viewPager2;
     Adapter myadapter;
     FirebaseViewer firebaseViewer;
     FirebaseDatabase database;
@@ -79,11 +79,16 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
         loadmovies();
         viewPager = (ViewPager)findViewById(R.id.vp);
+        viewPager1 = (ViewPager)findViewById(R.id.vpp);
+        viewPager2 = (ViewPager)findViewById(R.id.vsp);
         viewPager.setPageTransformer(true,new Transformer());
+        viewPager1.setPageTransformer(true,new Transformer());
+        viewPager2.setPageTransformer(true,new Transformer());
         FirebaseRecyclerOptions<DisplayProducts> options = new FirebaseRecyclerOptions.Builder<DisplayProducts>()
                 .setQuery(reference,DisplayProducts.class).build();
 
-        adapter= new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductsViewHolder>(options) {
+        adapter= new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductsViewHolder>(options)
+        {
             @Override
             protected void onBindViewHolder(@NonNull DisplayProductsViewHolder holder, int position, @NonNull DisplayProducts displayProducts)
             {
@@ -196,6 +201,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     {
         myadapter= new Adapter(this,moviesList);
         viewPager.setAdapter(myadapter);
+        viewPager1.setAdapter(myadapter);
+        viewPager2.setAdapter(myadapter);
 
     }
 
