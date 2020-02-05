@@ -15,6 +15,10 @@ public class DisplayProducts
         this.categoryId = categoryId;
     }
 
+    public String getCategoryId() {
+        return categoryId;
+    }
+
     public String getCategoryName() {
         return categoryName;
     }
@@ -23,9 +27,6 @@ public class DisplayProducts
         this.categoryName = categoryName;
     }
 
-    public String getCategoryId() {
-        return categoryId;
-    }
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;

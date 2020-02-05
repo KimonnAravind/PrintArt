@@ -4,11 +4,15 @@ import android.os.Bundle;
 
 import com.assigned.printart.Adapter.Adapter;
 import com.assigned.printart.FirebListen.FirebaseViewer;
+import com.assigned.printart.Model.DisplayCategory;
 import com.assigned.printart.Model.DisplayProducts;
 import com.assigned.printart.Model.Movies;
+import com.assigned.printart.Model.NestedCategory;
 import com.assigned.printart.Model.NestedDisplay;
 import com.assigned.printart.Transform.Transformer;
+import com.assigned.printart.Viewer.CategoryViewHolder;
 import com.assigned.printart.Viewer.DisplayProductsViewHolder;
+import com.assigned.printart.Viewer.NestedCategoryViewHolder;
 import com.assigned.printart.Viewer.NestedDisplayViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -55,8 +59,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     DatabaseReference reference;
     DatabaseReference movies;
     private RecyclerView /*recyclerView,*/ recyclerView;
-    FirebaseRecyclerAdapter<DisplayProducts, DisplayProductsViewHolder>adapter;
-    FirebaseRecyclerAdapter<NestedDisplay, NestedDisplayViewHolder>adapter1;
+    FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
+    FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
     RecyclerView.LayoutManager manager;
     /*RecyclerView.LayoutManager layoutManager, layoutManager1;*/
 
@@ -72,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         setSupportActionBar(toolbar);
         manager=new LinearLayoutManager(this);
         database=FirebaseDatabase.getInstance();
-        reference=database.getReference("Category");
+        reference=database.getReference("ProductCategory");
         recyclerView=findViewById(R.id.recyclerViewer);
         recyclerView.setLayoutManager(manager);
         firebaseViewer=this;
@@ -84,50 +88,50 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         viewPager.setPageTransformer(true,new Transformer());
         viewPager1.setPageTransformer(true,new Transformer());
         viewPager2.setPageTransformer(true,new Transformer());
-        FirebaseRecyclerOptions<DisplayProducts> options = new FirebaseRecyclerOptions.Builder<DisplayProducts>()
-                .setQuery(reference,DisplayProducts.class).build();
+        FirebaseRecyclerOptions<DisplayCategory> options = new FirebaseRecyclerOptions.Builder<DisplayCategory>()
+                .setQuery(reference,DisplayCategory.class).build();
 
-        adapter= new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductsViewHolder>(options)
+        adapter= new FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>(options)
         {
             @Override
-            protected void onBindViewHolder(@NonNull DisplayProductsViewHolder holder, int position, @NonNull DisplayProducts displayProducts)
+            protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull DisplayCategory displayCategory)
             {
 
-            DisplayProductsViewHolder.categoryName.setText(displayProducts.getCategoryName());
+            CategoryViewHolder.CategoryName.setText(displayCategory.getCategoryName());
 
-            FirebaseRecyclerOptions<NestedDisplay> options1= new FirebaseRecyclerOptions.Builder<NestedDisplay>()
-                    .setQuery(reference.child(displayProducts.getCategoryId()).child("data"),NestedDisplay.class)
+            FirebaseRecyclerOptions<NestedCategory> options1= new FirebaseRecyclerOptions.Builder<NestedCategory>()
+                    .setQuery(reference.child(displayCategory.getCategoryID()).child("About"),NestedCategory.class)
                     .build();
-            adapter1= new FirebaseRecyclerAdapter<NestedDisplay, NestedDisplayViewHolder>(options1) {
+            adapter1= new FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>(options1) {
                 @Override
-                protected void onBindViewHolder(@NonNull NestedDisplayViewHolder holder, int position, @NonNull NestedDisplay nestedDisplay) {
-                NestedDisplayViewHolder.dataId.setText(nestedDisplay.getDataId());
-                    NestedDisplayViewHolder.dataName.setText(nestedDisplay.getDataName());
-                    NestedDisplayViewHolder.dataAge.setText(nestedDisplay.getDataAge());
+                protected void onBindViewHolder(@NonNull NestedCategoryViewHolder holder, int position, @NonNull NestedCategory nestedCategory) {
+                    NestedCategoryViewHolder.ProductPrice.setText(nestedCategory.getProductPrice());
+                    NestedCategoryViewHolder.ProductName.setText(nestedCategory.getProductName());
+                    NestedCategoryViewHolder.ProductDescription.setText(nestedCategory.getProductDescription());
 
                 }
 
                 @NonNull
                 @Override
-                public NestedDisplayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                public NestedCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
                     View v2=LayoutInflater.from(getBaseContext()).inflate
                             (R.layout.nesteddisplay,parent,false);
-                    return new NestedDisplayViewHolder(v2);
+                    return new NestedCategoryViewHolder(v2);
                 }
             };
 
                 adapter1.startListening();
                 adapter1.notifyDataSetChanged();
-                DisplayProductsViewHolder.category_recyclerView.setAdapter(adapter1);
+                CategoryViewHolder.category_recyclerView.setAdapter(adapter1);
 
             }
 
             @NonNull
             @Override
-            public DisplayProductsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View v1=LayoutInflater.from(getBaseContext()).inflate(R.layout.displayproducts,parent,false);
-                return new DisplayProductsViewHolder(v1);
+                return new CategoryViewHolder(v1);
             }
         };
         adapter.startListening();
