@@ -15,7 +15,8 @@ public class DisplayCategory
         CategoryName = categoryName;
     }
 
-    public String getCategoryID() {
+    public String getCategoryID()
+    {
         return CategoryID;
     }
 

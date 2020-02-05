@@ -31,6 +31,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -68,7 +69,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        //ProRef= FirebaseDatabase.getInstance().getReference().child("Products");
+        ProRef= FirebaseDatabase.getInstance().getReference().child("ProductCategory");
         movies=FirebaseDatabase.getInstance().getReference().child("Movies");
 
 
@@ -88,8 +89,11 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         viewPager.setPageTransformer(true,new Transformer());
         viewPager1.setPageTransformer(true,new Transformer());
         viewPager2.setPageTransformer(true,new Transformer());
+
+        Query sorting= reference.orderByChild("CountPost");
+
         FirebaseRecyclerOptions<DisplayCategory> options = new FirebaseRecyclerOptions.Builder<DisplayCategory>()
-                .setQuery(reference,DisplayCategory.class).build();
+                .setQuery(sorting,DisplayCategory.class).build();
 
         adapter= new FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>(options)
         {
@@ -247,7 +251,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }*/
-
 
 
 }
