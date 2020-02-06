@@ -29,23 +29,16 @@
             android:orientation="vertical" >
 
 
-
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp"
                 android:layout_width="match_parent"
                 android:layout_height="175dp"
-                android:src="@color/flp"
-                android:overScrollMode="always"
-
-                />
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/vpp"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
                 android:overScrollMode="always"
                 android:src="@color/flp"
 
                 />
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewer"

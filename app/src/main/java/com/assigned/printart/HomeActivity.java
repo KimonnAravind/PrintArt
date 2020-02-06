@@ -5,18 +5,14 @@ import android.os.Bundle;
 import com.assigned.printart.Adapter.Adapter;
 import com.assigned.printart.FirebListen.FirebaseViewer;
 import com.assigned.printart.Model.DisplayCategory;
-import com.assigned.printart.Model.DisplayProducts;
 import com.assigned.printart.Model.Movies;
 import com.assigned.printart.Model.NestedCategory;
-import com.assigned.printart.Model.NestedDisplay;
 import com.assigned.printart.Transform.Transformer;
 import com.assigned.printart.Viewer.CategoryViewHolder;
-import com.assigned.printart.Viewer.DisplayProductsViewHolder;
 import com.assigned.printart.Viewer.NestedCategoryViewHolder;
-import com.assigned.printart.Viewer.NestedDisplayViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.assigned.printart.FirebListen.FirebaseViewer;
+
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -53,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
     private AppBarConfiguration mAppBarConfiguration;
     private DatabaseReference ProRef;
-    ViewPager viewPager,viewPager1,viewPager2;
+    ViewPager viewPager,viewPager2;
     Adapter myadapter;
     FirebaseViewer firebaseViewer;
     FirebaseDatabase database;
@@ -64,14 +60,12 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
     RecyclerView.LayoutManager manager;
     /*RecyclerView.LayoutManager layoutManager, layoutManager1;*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ProRef= FirebaseDatabase.getInstance().getReference().child("ProductCategory");
         movies=FirebaseDatabase.getInstance().getReference().child("Movies");
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,10 +78,10 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
         loadmovies();
         viewPager = (ViewPager)findViewById(R.id.vp);
-        viewPager1 = (ViewPager)findViewById(R.id.vpp);
+
         viewPager2 = (ViewPager)findViewById(R.id.vsp);
         viewPager.setPageTransformer(true,new Transformer());
-        viewPager1.setPageTransformer(true,new Transformer());
+
         viewPager2.setPageTransformer(true,new Transformer());
 
         Query sorting= reference.orderByChild("CountPost");
@@ -100,7 +94,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
             @Override
             protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull DisplayCategory displayCategory)
             {
-
             CategoryViewHolder.CategoryName.setText(displayCategory.getCategoryName());
 
             FirebaseRecyclerOptions<NestedCategory> options1= new FirebaseRecyclerOptions.Builder<NestedCategory>()
@@ -209,7 +202,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     {
         myadapter= new Adapter(this,moviesList);
         viewPager.setAdapter(myadapter);
-        viewPager1.setAdapter(myadapter);
+
         viewPager2.setAdapter(myadapter);
 
     }
@@ -219,38 +212,5 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     {
         Toast.makeText(this, ""+string, Toast.LENGTH_SHORT).show();
     }
-
-    /*@Override
-    protected void onStart()
-    {
-        super.onStart();
-
-        FirebaseRecyclerOptions<Products> opt=
-                new FirebaseRecyclerOptions.Builder<Products>().setQuery
-                        (ProRef,Products.class).build();
-
-        FirebaseRecyclerAdapter<Products, DisplayProduct> adapter= new
-                FirebaseRecyclerAdapter<Products, DisplayProduct>(opt) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull DisplayProduct holder, int position, @NonNull Products model)
-                    {
-                    holder.view3.setText(model.getDate());
-                        holder.view2.setText(model.getPid());
-                        holder.view1.setText(model.getDate());
-                        Picasso.get().load(model.getImage()).into(holder.img1);
-                    }
-                    @NonNull
-                    @Override
-                    public DisplayProduct onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.scroller_layout,parent,false);
-                        DisplayProduct holder = new DisplayProduct(view);
-                        return holder;
-                    }
-                };
-
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
-    }*/
-
 
 }

@@ -62,12 +62,7 @@ public class Adapter extends PagerAdapter
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = inflater.inflate(R.layout.pageviewer,container,false);
         ImageView movie_images = (ImageView)view.findViewById(R.id.imageviewer);
-        TextView movie_name=(TextView)view.findViewById(R.id.textviewer);
-        TextView movie_description=(TextView)view.findViewById(R.id.textviewer1);
-
         Picasso.get().load(moviesList.get(position).getImage()).into( movie_images);
-        movie_name.setText(moviesList.get(position).getName());
-        movie_description.setText(moviesList.get(position).getDescription());
         container.addView(view);
         return view;
     }
