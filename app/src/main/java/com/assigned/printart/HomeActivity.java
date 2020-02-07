@@ -13,6 +13,7 @@ import com.assigned.printart.Viewer.NestedCategoryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -44,6 +45,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
@@ -61,7 +63,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     RecyclerView.LayoutManager manager;
     /*RecyclerView.LayoutManager layoutManager, layoutManager1;*/
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ProRef= FirebaseDatabase.getInstance().getReference().child("ProductCategory");
@@ -78,13 +81,46 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
         loadmovies();
         viewPager = (ViewPager)findViewById(R.id.vp);
-
         viewPager2 = (ViewPager)findViewById(R.id.vsp);
         viewPager.setPageTransformer(true,new Transformer());
 
         viewPager2.setPageTransformer(true,new Transformer());
 
-        Query sorting= reference.orderByChild("CountPost");
+        Random random = new Random();
+        int randomNumber = random.nextInt(4) ;
+        Query sorting;
+        Log.e("Printing","Prints"+randomNumber);
+        switch (randomNumber)
+        {
+            case 0:
+            {
+                sorting= reference.orderByChild("CountPost");
+                break;
+            }
+
+            case 1:
+            {
+                sorting=reference;
+                break;
+            }
+
+            case 2:
+            {
+                sorting= reference.orderByChild("CountPost1");
+                break;
+            }
+
+            case 3:
+            {
+                sorting= reference.orderByChild("CountPost2");
+                break;
+            }
+            default:
+            {
+                sorting=reference;
+            }
+        }
+
 
         FirebaseRecyclerOptions<DisplayCategory> options = new FirebaseRecyclerOptions.Builder<DisplayCategory>()
                 .setQuery(sorting,DisplayCategory.class).build();
@@ -117,7 +153,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
                     return new NestedCategoryViewHolder(v2);
                 }
             };
-
                 adapter1.startListening();
                 adapter1.notifyDataSetChanged();
                 CategoryViewHolder.category_recyclerView.setAdapter(adapter1);
@@ -164,7 +199,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         layoutManager1 = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         recyclerView1.setLayoutManager(layoutManager1);*/
     }
-
     private void loadmovies() {
     movies.addListenerForSingleValueEvent(new ValueEventListener() {
         List<Movies> moviesList= new ArrayList<>();
@@ -174,43 +208,34 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
             moviesList.add(moviesnapshot.getValue(Movies.class));
             firebaseViewer.Loadsuccess(moviesList);
         }
-
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
         firebaseViewer.Loadfailed(databaseError.getMessage());
         }
     });
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
     @Override
     public void Loadsuccess(List<Movies> moviesList)
     {
         myadapter= new Adapter(this,moviesList);
         viewPager.setAdapter(myadapter);
-
         viewPager2.setAdapter(myadapter);
-
     }
-
     @Override
     public void Loadfailed(String string)
     {
         Toast.makeText(this, ""+string, Toast.LENGTH_SHORT).show();
     }
-
 }
