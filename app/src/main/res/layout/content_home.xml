@@ -32,11 +32,8 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vp"
                 android:layout_width="match_parent"
-                android:layout_height="175dp"
-                android:overScrollMode="always"
-                android:src="@color/flp"
-
-                />
+                android:layout_height="225dp"
+                 />
 
 
 
@@ -52,7 +49,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="75dp"
                 android:src="@drawable/hats"
 
                 />
@@ -60,7 +57,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/vsp"
                 android:layout_width="match_parent"
-                android:layout_height="289dp"
+                android:layout_height="225dp"
                 android:overScrollMode="always"
                 android:src="@color/flp"
 

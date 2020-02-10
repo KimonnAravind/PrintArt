@@ -29,10 +29,6 @@ public class Adapter extends PagerAdapter
         this.moviesList = moviesList;
         inflater= LayoutInflater.from(context);
     }
-
-    /**
-     * Return the number of views available.
-     */
     @Override
     public int getCount() {
         return moviesList.size();
