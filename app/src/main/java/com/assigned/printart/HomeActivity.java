@@ -1,5 +1,6 @@
 package com.assigned.printart;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.assigned.printart.Adapter.Adapter;
@@ -130,7 +131,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         adapter= new FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>(options)
         {
             @Override
-            protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull DisplayCategory displayCategory)
+            protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull final DisplayCategory displayCategory)
             {
             CategoryViewHolder.CategoryName.setText(displayCategory.getCategoryName());
 
@@ -144,7 +145,9 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(HomeActivity.this, ""+nestedCategory.getProductDescription(), Toast.LENGTH_SHORT).show();
+                            Intent intent= new Intent(HomeActivity.this,DisplayProductActivity.class);
+                            intent.putExtra("Category", displayCategory.getCategoryID());
+                            startActivity(intent);
                         }
                     });
                 }

@@ -13,8 +13,6 @@ import com.assigned.printart.R;
 public class NestedCategoryViewHolder extends RecyclerView.ViewHolder
 {
 
-    public static TextView ProductName;
-    public static TextView ProductPrice;
     public static TextView ProductDescription;
     public static ImageView IgmV;
     public static NestedRecycler nestedRecycler;
