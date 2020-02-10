@@ -1,18 +1,18 @@
 package com.assigned.printart.Model;
 
-public class Movies {
+public class Banners
+{
 
     private String image;
 
-    public Movies()
+    public Banners()
     {
     }
-
-    public Movies(String image) {
+    public Banners(String image) {
         this.image = image;
     }
 
-    public String getImage() {
+    public String getImage(){
         return image;
     }
 
@@ -20,4 +20,3 @@ public class Movies {
         this.image = image;
     }
 }
-

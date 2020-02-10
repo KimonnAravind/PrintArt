@@ -4,8 +4,9 @@ import android.os.Bundle;
 
 import com.assigned.printart.Adapter.Adapter;
 import com.assigned.printart.FirebListen.FirebaseViewer;
+import com.assigned.printart.Model.Banners;
 import com.assigned.printart.Model.DisplayCategory;
-import com.assigned.printart.Model.Movies;
+import com.assigned.printart.Model.Banners;
 import com.assigned.printart.Model.NestedCategory;
 import com.assigned.printart.Transform.Transformer;
 import com.assigned.printart.Viewer.CategoryViewHolder;
@@ -30,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -56,8 +58,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     FirebaseViewer firebaseViewer;
     FirebaseDatabase database;
     DatabaseReference reference;
-    DatabaseReference movies;
-    private RecyclerView /*recyclerView,*/ recyclerView;
+    DatabaseReference banner;
+    private RecyclerView recyclerView;
     FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
     FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
     RecyclerView.LayoutManager manager;
@@ -68,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ProRef= FirebaseDatabase.getInstance().getReference().child("ProductCategory");
-        movies=FirebaseDatabase.getInstance().getReference().child("Movies");
+        banner=FirebaseDatabase.getInstance().getReference().child("Banner");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,7 +81,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         recyclerView.setLayoutManager(manager);
         firebaseViewer=this;
 
-        loadmovies();
+        loadbanners();
         viewPager = (ViewPager)findViewById(R.id.vp);
         viewPager2 = (ViewPager)findViewById(R.id.vsp);
         viewPager.setPageTransformer(true,new Transformer());
@@ -137,11 +139,14 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
                     .build();
             adapter1= new FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>(options1) {
                 @Override
-                protected void onBindViewHolder(@NonNull NestedCategoryViewHolder holder, int position, @NonNull NestedCategory nestedCategory) {
-                    NestedCategoryViewHolder.ProductPrice.setText(nestedCategory.getProductPrice());
-                    NestedCategoryViewHolder.ProductName.setText(nestedCategory.getProductName());
-                    NestedCategoryViewHolder.ProductDescription.setText(nestedCategory.getProductDescription());
-
+                protected void onBindViewHolder(@NonNull NestedCategoryViewHolder holder, int position, @NonNull final NestedCategory nestedCategory) {
+                    Picasso.get().load(nestedCategory.getProductDescription()).into(holder.IgmV);
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(HomeActivity.this, ""+nestedCategory.getProductDescription(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
                 @NonNull
@@ -179,8 +184,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         });*/
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
                 R.id.nav_tools, R.id.nav_share, R.id.nav_send)
@@ -189,24 +192,16 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-       /* recyclerView=(RecyclerView)findViewById(R.id.recyclerViewer);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setLayoutManager(layoutManager);
-*//*
-        recyclerView1=(RecyclerView)findViewById(R.id.recyclerViewer1);
-        recyclerView1.setHasFixedSize(true);
-        layoutManager1 = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        recyclerView1.setLayoutManager(layoutManager1);*/
+
     }
-    private void loadmovies() {
-    movies.addListenerForSingleValueEvent(new ValueEventListener() {
-        List<Movies> moviesList= new ArrayList<>();
+    private void loadbanners() {
+    banner.addListenerForSingleValueEvent(new ValueEventListener() {
+        List<Banners> bannersList= new ArrayList<>();
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            for(DataSnapshot moviesnapshot:dataSnapshot.getChildren())
-            moviesList.add(moviesnapshot.getValue(Movies.class));
-            firebaseViewer.Loadsuccess(moviesList);
+            for(DataSnapshot bannersnapshot:dataSnapshot.getChildren())
+            bannersList.add(bannersnapshot.getValue(Banners.class));
+            firebaseViewer.Loadsuccess(bannersList);
         }
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -227,9 +222,9 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
                 || super.onSupportNavigateUp();
     }
     @Override
-    public void Loadsuccess(List<Movies> moviesList)
+    public void Loadsuccess(List<Banners> bannersList)
     {
-        myadapter= new Adapter(this,moviesList);
+        myadapter= new Adapter(this,bannersList);
         viewPager.setAdapter(myadapter);
         viewPager2.setAdapter(myadapter);
     }

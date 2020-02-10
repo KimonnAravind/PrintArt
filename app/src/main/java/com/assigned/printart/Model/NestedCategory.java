@@ -1,9 +1,11 @@
 package com.assigned.printart.Model;
 
+import android.net.Uri;
+import android.widget.ImageView;
+
 public class NestedCategory
 {
-private String ProductName;
-private String ProductPrice;
+
 private String ProductDescription;
 
 
@@ -12,27 +14,8 @@ public NestedCategory()
 
 }
 
-    public NestedCategory(String productName, String productPrice, String productDescription)
-    {
-        ProductName = productName;
-        ProductPrice = productPrice;
+    public NestedCategory(String productDescription) {
         ProductDescription = productDescription;
-    }
-
-    public String getProductName() {
-        return ProductName;
-    }
-
-    public void setProductName(String productName) {
-        ProductName = productName;
-    }
-
-    public String getProductPrice() {
-        return ProductPrice;
-    }
-
-    public void setProductPrice(String productPrice) {
-        ProductPrice = productPrice;
     }
 
     public String getProductDescription() {

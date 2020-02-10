@@ -1,6 +1,7 @@
 package com.assigned.printart.Viewer;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,13 +16,14 @@ public class NestedCategoryViewHolder extends RecyclerView.ViewHolder
     public static TextView ProductName;
     public static TextView ProductPrice;
     public static TextView ProductDescription;
+    public static ImageView IgmV;
     public static NestedRecycler nestedRecycler;
 
-    public NestedCategoryViewHolder(@NonNull View itemView) {
+    public NestedCategoryViewHolder(@NonNull View itemView)
+    {
         super(itemView);
-        ProductPrice = itemView.findViewById(R.id.data_id);
-        ProductDescription = itemView.findViewById(R.id.data_age);
-        ProductName = itemView.findViewById(R.id.data_name);
+
+        IgmV=itemView.findViewById(R.id.imageView);
 
 
     }
