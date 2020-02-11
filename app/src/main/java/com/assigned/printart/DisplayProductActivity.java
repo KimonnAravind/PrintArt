@@ -41,7 +41,7 @@ public class DisplayProductActivity extends AppCompatActivity
         recyclerViewdisplay.setHasFixedSize(false);
         gridLayoutManager=new GridLayoutManager(getApplicationContext(),2);
         CategoryID=getIntent().getStringExtra("Category");
-        DisplayReference= FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
+        DisplayReference= FirebaseDatabase.getInstance().getReference().child("ShowingProducts").child(CategoryID);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewdisplay.setLayoutManager(gridLayoutManager);
     }
@@ -52,19 +52,18 @@ public class DisplayProductActivity extends AppCompatActivity
     {
         super.onStart();
 
-        Toast.makeText(this, "00", Toast.LENGTH_SHORT).show();
+
 
         FirebaseRecyclerOptions<DisplayProducts> options=
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(DisplayReference, DisplayProducts.class)
                         .build();
-        Toast.makeText(this, "01", Toast.LENGTH_SHORT).show();
+
          adapter2=new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options)
         {
 
             @Override
             protected void onBindViewHolder(@NonNull DisplayProductViewHolder holder, int position, @NonNull final DisplayProducts model) {
                 Picasso.get().load(model.getPro()).into(holder.imgv);
-                Toast.makeText(DisplayProductActivity.this, ""+model.getPro(), Toast.LENGTH_SHORT).show();
 
             }
 
