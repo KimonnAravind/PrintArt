@@ -64,6 +64,16 @@ public class DisplayProductActivity extends AppCompatActivity
             @Override
             protected void onBindViewHolder(@NonNull DisplayProductViewHolder holder, int position, @NonNull final DisplayProducts model) {
                 Picasso.get().load(model.getPro()).into(holder.imgv);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent = new Intent(DisplayProductActivity.this, ShowDetailsActivity.class);
+                        intent.putExtra("Display", model.getProID());
+                        intent.putExtra("Category",CategoryID);
+                        startActivity(intent);
+                    }
+                });
 
             }
 
