@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class DisplayProductActivity extends AppCompatActivity
     public RecyclerView recyclerViewdisplay;
     RecyclerView.LayoutManager layoutManager;
     GridLayoutManager gridLayoutManager;
+
     private String CategoryID;
     private DatabaseReference DisplayReference;
     FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>adapter2;
@@ -44,6 +46,7 @@ public class DisplayProductActivity extends AppCompatActivity
         DisplayReference= FirebaseDatabase.getInstance().getReference().child("ShowingProducts").child(CategoryID);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewdisplay.setLayoutManager(gridLayoutManager);
+
     }
 
 
@@ -64,14 +67,19 @@ public class DisplayProductActivity extends AppCompatActivity
             @Override
             protected void onBindViewHolder(@NonNull DisplayProductViewHolder holder, int position, @NonNull final DisplayProducts model) {
                 Picasso.get().load(model.getPro()).into(holder.imgv);
+
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
                         Intent intent = new Intent(DisplayProductActivity.this, ShowDetailsActivity.class);
-                        intent.putExtra("Display", model.getProID());
-                        intent.putExtra("Category",CategoryID);
-                        startActivity(intent);
+                       intent.putExtra("Display", model.getProID());
+                        intent.putExtra("Category", CategoryID);
+                       startActivity(intent);
+
+                        Log.e("CATEGORY ID IS: ",CategoryID);
+                        Log.e("Display ID IS: ", model.getProID());
+
                     }
                 });
 

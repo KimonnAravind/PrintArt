@@ -53,14 +53,13 @@ import java.util.Random;
 public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
     private AppBarConfiguration mAppBarConfiguration;
-    private DatabaseReference ProRef;
     ViewPager viewPager,viewPager2;
     Adapter myadapter;
     FirebaseViewer firebaseViewer;
-    FirebaseDatabase database;
+
     DatabaseReference reference;
     DatabaseReference banner;
-    private RecyclerView recyclerView;
+     RecyclerView recyclerView;
     FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
     FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
     RecyclerView.LayoutManager manager;
@@ -70,14 +69,12 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ProRef= FirebaseDatabase.getInstance().getReference().child("ProductCategory");
         banner=FirebaseDatabase.getInstance().getReference().child("Banner");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         manager=new LinearLayoutManager(this);
-        database=FirebaseDatabase.getInstance();
-        reference=database.getReference("ProductCategory");
+        reference=FirebaseDatabase.getInstance().getReference("ProductCategory");
         recyclerView=findViewById(R.id.recyclerViewer);
         recyclerView.setLayoutManager(manager);
         firebaseViewer=this;
@@ -146,12 +143,11 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
                         @Override
                         public void onClick(View v) {
                             Intent intent= new Intent(HomeActivity.this,DisplayProductActivity.class);
-                            intent.putExtra("Category", displayCategory.getCategoryID());
+                         intent.putExtra("Category", displayCategory.getCategoryID());
                             startActivity(intent);
                         }
                     });
                 }
-
                 @NonNull
                 @Override
                 public NestedCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -197,7 +193,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         NavigationUI.setupWithNavController(navigationView, navController);
 
     }
-    private void loadbanners() {
+    private void loadbanners()
+    {
     banner.addListenerForSingleValueEvent(new ValueEventListener() {
         List<Banners> bannersList= new ArrayList<>();
         @Override

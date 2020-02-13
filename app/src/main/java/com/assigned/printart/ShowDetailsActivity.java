@@ -37,14 +37,14 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
-       DisplayID=getIntent().getStringExtra("Display");
-        CategoryID=getIntent().getStringExtra("Category");
+      DisplayID=getIntent().getStringExtra("Display");
+      CategoryID=getIntent().getStringExtra("Category");
         productFirebaseViewer=this;
 
         products=(ViewPager)findViewById(R.id.productviewerpage);
         products.setPageTransformer(true,new Transformer());
         Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts")
-                .child(CategoryID).child("01");
+                .child(CategoryID).child(DisplayID).child("images");
 
         //Toast.makeText(this, ""+CategoryID, Toast.LENGTH_SHORT).show();
         /*ProductDetailsRef= FirebaseDatabase.getInstance().getReference().child("ShowingProducts").child(CategoryID)
@@ -54,7 +54,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         loadimages();
 
 
-        Log.e("CATEGORY is is", CategoryID); //1
+
     }
 
     @Override
