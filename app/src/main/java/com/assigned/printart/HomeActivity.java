@@ -144,6 +144,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
                         public void onClick(View v) {
                             Intent intent= new Intent(HomeActivity.this,DisplayProductActivity.class);
                          intent.putExtra("Category", displayCategory.getCategoryID());
+                            intent.putExtra("TypeID",nestedCategory.getType());
                             startActivity(intent);
                         }
                     });

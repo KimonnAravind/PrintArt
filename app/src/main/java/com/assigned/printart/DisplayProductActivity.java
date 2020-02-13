@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.TypeEvaluator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +31,8 @@ public class DisplayProductActivity extends AppCompatActivity
     public RecyclerView recyclerViewdisplay;
     RecyclerView.LayoutManager layoutManager;
     GridLayoutManager gridLayoutManager;
-
+    private String TypeID;
+    Query sorting;
     private String CategoryID;
     private DatabaseReference DisplayReference;
     FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>adapter2;
@@ -43,9 +45,21 @@ public class DisplayProductActivity extends AppCompatActivity
         recyclerViewdisplay.setHasFixedSize(false);
         gridLayoutManager=new GridLayoutManager(getApplicationContext(),2);
         CategoryID=getIntent().getStringExtra("Category");
+        TypeID=getIntent().getStringExtra("TypeID");
+
         DisplayReference= FirebaseDatabase.getInstance().getReference().child("ShowingProducts").child(CategoryID);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewdisplay.setLayoutManager(gridLayoutManager);
+
+        if(TypeID.equals("01"))
+        {
+            sorting= DisplayReference.orderByChild("type");
+        }
+        else if(TypeID.equals("02"))
+        {
+            sorting= DisplayReference.orderByChild("type1");
+        }
+
 
     }
 
@@ -58,7 +72,7 @@ public class DisplayProductActivity extends AppCompatActivity
 
 
         FirebaseRecyclerOptions<DisplayProducts> options=
-                new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(DisplayReference, DisplayProducts.class)
+                new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(sorting, DisplayProducts.class)
                         .build();
 
          adapter2=new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options)
