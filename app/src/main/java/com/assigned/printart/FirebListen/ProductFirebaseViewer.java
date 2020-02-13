@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ProductFirebaseViewer
 {
+
     public void Loadsuccess(List<ProductBanners> productBannersList);
     public void Loadfailed(String string);
 

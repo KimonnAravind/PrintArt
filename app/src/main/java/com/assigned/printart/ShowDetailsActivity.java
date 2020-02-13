@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer {
     String DisplayID,CategoryID;
@@ -32,6 +35,9 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     ProductAdapter productAdapter;
     ProductFirebaseViewer productFirebaseViewer;
     DatabaseReference Productbanner;
+    private List<ProductBanners> productBannersList= new ArrayList<>();
+    private Timer timer;
+    private int currentposition=0;
     private DatabaseReference ProductDetailsRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +46,16 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
       DisplayID=getIntent().getStringExtra("Display");
       CategoryID=getIntent().getStringExtra("Category");
         productFirebaseViewer=this;
-
         products=(ViewPager)findViewById(R.id.productviewerpage);
         products.setPageTransformer(true,new Transformer());
         Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts")
                 .child(CategoryID).child(DisplayID).child("images");
-
-        //Toast.makeText(this, ""+CategoryID, Toast.LENGTH_SHORT).show();
-        /*ProductDetailsRef= FirebaseDatabase.getInstance().getReference().child("ShowingProducts").child(CategoryID)
-                .child(DisplayID).child("ProductPic");
-        */
-
         loadimages();
 
 
-
     }
+
+
 
     @Override
     public void Loadsuccess(List<ProductBanners> productBannersList)
@@ -63,18 +63,15 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     productAdapter=new ProductAdapter(this,productBannersList);
     products.setAdapter(productAdapter);
     }
-
     @Override
     public void Loadfailed(String string)
     {
         Toast.makeText(this, ""+string, Toast.LENGTH_SHORT).show();
     }
-
     private void loadimages()
     {
-
         Productbanner.addListenerForSingleValueEvent(new ValueEventListener() {
-            List<ProductBanners> productBannersList= new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot productbannersnapshot:dataSnapshot.getChildren())
@@ -87,6 +84,5 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             }
         });
     }
-
 
 }
