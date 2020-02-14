@@ -1,5 +1,6 @@
 package com.assigned.printart;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -45,6 +47,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -57,8 +61,9 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
     private AppBarConfiguration mAppBarConfiguration;
     ViewPager viewPager,viewPager2;
-    Adapter myadapter;
+    Adapter myadapter,myadapters;
     private Timer  timer;
+    private LinearLayout dotslayout;
     int currentPosition = 0;
     FirebaseViewer firebaseViewer;
     List<Banners> bannersList= new ArrayList<>();
@@ -68,6 +73,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
     FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
     RecyclerView.LayoutManager manager;
+    int positionpro =0;
     /*RecyclerView.LayoutManager layoutManager, layoutManager1;*/
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -75,7 +81,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         banner=FirebaseDatabase.getInstance().getReference().child("Banner");
-
+        dotslayout=(LinearLayout)findViewById(R.id.dotscontainer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         manager=new LinearLayoutManager(this);
@@ -85,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         firebaseViewer=this;
 
         loadbanners();
+        dotsview(positionpro++);
         slideshow();
 
         viewPager = (ViewPager)findViewById(R.id.vp);
@@ -200,6 +207,33 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        myadapter= new Adapter(this,bannersList);
+        viewPager.setAdapter(myadapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+                Toast.makeText(HomeActivity.this, ""+positionpro, Toast.LENGTH_SHORT).show();
+                if(positionpro>0)
+                {
+                    Toast.makeText(HomeActivity.this, "in", Toast.LENGTH_SHORT).show();
+                    positionpro=0;
+                    dotsview(positionpro++);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
 
@@ -256,19 +290,19 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
             @Override
             public void run() {
                 Log.e("Kimonn1",""+currentPosition);
-                if(1==1)
-            {
 
                 viewPager.setCurrentItem(currentPosition,true);
+                viewPager2.setCurrentItem(currentPosition,true);
                 currentPosition=currentPosition+1;
                 if(currentPosition>=bannersList.size())
                 {
                     currentPosition=0;
                 }
 
-            }
 
             }
+
+
         };
         timer=new Timer();
         timer.schedule(new TimerTask() {
@@ -276,7 +310,36 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
             public void run() {
                 handler.post(runnable);
             }
-        },500,2500);
+        },600,2500);
     }
 
+private void dotsview(int movingposition)
+{
+    if(dotslayout.getChildCount()>0)
+    {
+        dotslayout.removeAllViews();
+    }
+    ImageView dotArray[] = new ImageView[5];
+    for(int i = 0;i<5;i++)
+    {
+        dotArray[i]= new ImageView(this);
+        if(i==movingposition)
+        {
+            Toast.makeText(this, "Active", Toast.LENGTH_SHORT).show();
+            dotArray[i].setImageDrawable(ContextCompat.getDrawable(this,R.drawable.active));
+
+        }
+        else
+        {
+            Toast.makeText(this, "InActive", Toast.LENGTH_SHORT).show();
+
+            dotArray[i].setImageDrawable(ContextCompat.getDrawable(this,R.drawable.inactive));
+
+        }
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(4,0,4,0);
+        dotslayout.addView(dotArray[i],layoutParams);
+    }
+}
 }
