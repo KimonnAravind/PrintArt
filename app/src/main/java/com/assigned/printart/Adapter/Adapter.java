@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -25,8 +27,10 @@ public class Adapter extends PagerAdapter
         inflater= LayoutInflater.from(context);
     }
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         return bannersList.size();
+
     }
 
     /**
@@ -54,6 +58,7 @@ public class Adapter extends PagerAdapter
         View view = inflater.inflate(R.layout.pageviewer,container,false);
         ImageView banner_images = (ImageView)view.findViewById(R.id.imageviewer);
         Picasso.get().load(bannersList.get(position).getImage()).into( banner_images);
+
         container.addView(view);
         return view;
     }

@@ -32,7 +32,7 @@ import java.util.TimerTask;
 public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer {
     String DisplayID,CategoryID;
     ViewPager products;
-    ProductAdapter productAdapter;
+    ProductAdapter aptr;
     ProductFirebaseViewer productFirebaseViewer;
     DatabaseReference Productbanner;
     private List<ProductBanners> productBannersList= new ArrayList<>();
@@ -46,11 +46,12 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
       DisplayID=getIntent().getStringExtra("Display");
       CategoryID=getIntent().getStringExtra("Category");
         productFirebaseViewer=this;
-        products=(ViewPager)findViewById(R.id.productviewerpage);
-        products.setPageTransformer(true,new Transformer());
         Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts")
                 .child(CategoryID).child(DisplayID).child("images");
+        products=(ViewPager)findViewById(R.id.productviewerpage);
         loadimages();
+        products.setPageTransformer(true,new Transformer());
+
 
 
     }
@@ -60,8 +61,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     @Override
     public void Loadsuccess(List<ProductBanners> productBannersList)
     {
-    productAdapter=new ProductAdapter(this,productBannersList);
-    products.setAdapter(productAdapter);
+    aptr=new ProductAdapter(this,productBannersList);
+    products.setAdapter(aptr);
     }
     @Override
     public void Loadfailed(String string)
@@ -84,5 +85,32 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             }
         });
     }
+
+private void slideshow()
+{
+    final Handler handler= new Handler();
+    final Runnable runnable= new Runnable()
+
+    {
+    @Override
+    public void run()
+    {    if(currentposition==productBannersList.size())
+    {
+
+        currentposition=0;
+        products.setCurrentItem(currentposition++,true);
+    }
+    }
+
+};
+timer=new Timer();
+timer.schedule(new TimerTask() {
+    @Override
+    public void run()
+    {
+    handler.post(runnable);
+    }
+},25,250);
+}
 
 }

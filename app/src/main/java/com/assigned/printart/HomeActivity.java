@@ -15,6 +15,7 @@ import com.assigned.printart.Viewer.NestedCategoryViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,14 +50,18 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
     private AppBarConfiguration mAppBarConfiguration;
     ViewPager viewPager,viewPager2;
     Adapter myadapter;
+    private Timer  timer;
+    int currentPosition = 0;
     FirebaseViewer firebaseViewer;
-
+    List<Banners> bannersList= new ArrayList<>();
     DatabaseReference reference;
     DatabaseReference banner;
      RecyclerView recyclerView;
@@ -80,6 +85,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         firebaseViewer=this;
 
         loadbanners();
+        slideshow();
+
         viewPager = (ViewPager)findViewById(R.id.vp);
         viewPager2 = (ViewPager)findViewById(R.id.vsp);
         viewPager.setPageTransformer(true,new Transformer());
@@ -194,10 +201,13 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         NavigationUI.setupWithNavController(navigationView, navController);
 
     }
+
+
+
     private void loadbanners()
     {
     banner.addListenerForSingleValueEvent(new ValueEventListener() {
-        List<Banners> bannersList= new ArrayList<>();
+
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             for(DataSnapshot bannersnapshot:dataSnapshot.getChildren())
@@ -234,4 +244,39 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     {
         Toast.makeText(this, ""+string, Toast.LENGTH_SHORT).show();
     }
+
+    public void slideshow()
+    {
+        int temp= bannersList.size();
+
+
+        final Handler handler = new Handler();
+
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Log.e("Kimonn1",""+currentPosition);
+                if(1==1)
+            {
+
+                viewPager.setCurrentItem(currentPosition,true);
+                currentPosition=currentPosition+1;
+                if(currentPosition>=bannersList.size())
+                {
+                    currentPosition=0;
+                }
+
+            }
+
+            }
+        };
+        timer=new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(runnable);
+            }
+        },500,2500);
+    }
+
 }
