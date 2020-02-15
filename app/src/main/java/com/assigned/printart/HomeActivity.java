@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         firebaseViewer=this;
 
         loadbanners();
-     //   dotsview(positionpro++);
+     ////   dotsview(positionpro++);
         slideshow();
 
         viewPager = (ViewPager)findViewById(R.id.vp);
