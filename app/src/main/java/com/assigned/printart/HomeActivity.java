@@ -91,7 +91,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         firebaseViewer=this;
 
         loadbanners();
-        dotsview(positionpro++);
+     //   dotsview(positionpro++);
         slideshow();
 
         viewPager = (ViewPager)findViewById(R.id.vp);
@@ -219,13 +219,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
             @Override
             public void onPageSelected(int position)
             {
-                Toast.makeText(HomeActivity.this, ""+positionpro, Toast.LENGTH_SHORT).show();
-                if(positionpro>0)
-                {
-                    Toast.makeText(HomeActivity.this, "in", Toast.LENGTH_SHORT).show();
-                    positionpro=0;
-                    dotsview(positionpro++);
-                }
+
             }
 
             @Override
@@ -313,7 +307,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         },600,2500);
     }
 
-private void dotsview(int movingposition)
+/*private void dotsview(int movingposition)
 {
     if(dotslayout.getChildCount()>0)
     {
@@ -341,5 +335,5 @@ private void dotsview(int movingposition)
         layoutParams.setMargins(4,0,4,0);
         dotslayout.addView(dotArray[i],layoutParams);
     }
-}
+}*/
 }
