@@ -3,17 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_Logout"
+        android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:icon="@drawable/thoppi"
-        android:title="@string/logout"
-        app:showAsAction="never" />
+        android:title="@string/action_settings"
 
-    <item
-        android:id="@+id/action"
-        android:orderInCategory="100"
-        android:icon="@drawable/thoppi"
-        android:title="@string/logout"
         app:showAsAction="never" />
-
 </menu>

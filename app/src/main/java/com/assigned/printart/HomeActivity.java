@@ -19,6 +19,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -249,7 +250,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     });
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
@@ -260,6 +262,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
     @Override
     public void Loadsuccess(List<Banners> bannersList)
     {
@@ -336,4 +340,5 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         dotslayout.addView(dotArray[i],layoutParams);
     }
 }*/
+
 }
