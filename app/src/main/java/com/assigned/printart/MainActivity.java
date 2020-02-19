@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.internal.ConnectionErrorMessages;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,10 +41,12 @@ public class MainActivity extends AppCompatActivity
     private EditText fifth;
     private EditText sixth;
     private LinearLayout pinLayout;
+    private TextInputLayout two,three,four;
     private Button Verify,Verification;
-    private EditText PhoneNumber;
+    private EditText PhoneNumber,name,password,passwords;
     private String OTP="Invalid", Combo;
     private FirebaseAuth mAuth;
+    private Button createAcc;
     String code;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +65,20 @@ public class MainActivity extends AppCompatActivity
         pinLayout=(LinearLayout) findViewById(R.id.linLayout);
         Verification=(Button)findViewById(R.id.verification);
         PhoneNumber=(EditText)findViewById(R.id.phonenumber);
+        name=(EditText)findViewById(R.id.name);
+        password=(EditText)findViewById(R.id.password);
+        passwords=(EditText)findViewById(R.id.repassword);
+        two=(TextInputLayout)findViewById(R.id.layps);
+        three=(TextInputLayout)findViewById(R.id.laypsc);
+        four=(TextInputLayout)findViewById(R.id.laypscs);
+        createAcc=(Button)findViewById(R.id.create);
 
         mAuth = FirebaseAuth.getInstance();
         {
 
 
-            first.addTextChangedListener(new TextWatcher() {
+            first.addTextChangedListener(new TextWatcher()
+            {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -166,6 +177,8 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (s.length() == 1) {
+
+
                         sixth.requestFocus();
                     }
                     if(s.length()<1)
@@ -189,7 +202,11 @@ public class MainActivity extends AppCompatActivity
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (s.length() == 1)
                     {
-                        Verify.performClick();
+                        if(!first.getText().toString().isEmpty()&&!second.getText().toString().isEmpty()&&!third.getText().toString().isEmpty()&&
+                                !fourth.getText().toString().isEmpty()&&!fifth.getText().toString().isEmpty())
+                        {
+                            /*Verification.performClick();*/
+                        }
 
                     }
                     if(s.length()<1)
@@ -213,11 +230,16 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 getOTP();
-                pinLayout.setVisibility(View.VISIBLE);
-                Verification.setVisibility(View.VISIBLE);
-                Verify.setVisibility(View.INVISIBLE);
+
+
             }
 
+        });
+        createAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Ready To push", Toast.LENGTH_SHORT).show();
+            }
         });
 
         Verification.setOnClickListener(new View.OnClickListener() {
@@ -254,18 +276,19 @@ public class MainActivity extends AppCompatActivity
                         if (task.isSuccessful())
                         {
                             PhoneNumber.setEnabled(false);
-
-
+                            Toast.makeText(MainActivity.this, "Verified", Toast.LENGTH_SHORT).show();
+                            PhoneNumber.setEnabled(false);
+                            two.setVisibility(View.VISIBLE);
+                            three.setVisibility(View.VISIBLE);
+                            four.setVisibility(View.VISIBLE);
+                            Verification.setVisibility(View.INVISIBLE);
 
                         }
                         else {
-                            // Sign in failed, display a message and update the UI
-                            Log.w("YESPlease", "signInWithCredential:failure", task.getException());
-                            Toast.makeText(MainActivity.this, "Invalid OTP", Toast.LENGTH_SHORT).show();
 
+                            Toast.makeText(MainActivity.this, "OTP Expired", Toast.LENGTH_SHORT).show();
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
-                            }
+                                 }
                         }
                     }
                 });
@@ -301,13 +324,15 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
 
-            Toast.makeText(MainActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "You have exceeded the maximum number of try! Please try after 24 hours, or Contact support team!", Toast.LENGTH_SHORT).show();
         }
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken)
         {
             super.onCodeSent(s, forceResendingToken);
             OTP = s;
+            Verify.setVisibility(View.INVISIBLE);
+            pinLayout.setVisibility(View.VISIBLE);
         }
 
 
