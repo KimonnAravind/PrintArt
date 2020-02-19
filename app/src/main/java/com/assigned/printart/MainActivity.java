@@ -282,6 +282,7 @@ public class MainActivity extends AppCompatActivity
                             three.setVisibility(View.VISIBLE);
                             four.setVisibility(View.VISIBLE);
                             Verification.setVisibility(View.INVISIBLE);
+                            createAcc.setVisibility(View.VISIBLE);
 
                         }
                         else {
@@ -333,6 +334,7 @@ public class MainActivity extends AppCompatActivity
             OTP = s;
             Verify.setVisibility(View.INVISIBLE);
             pinLayout.setVisibility(View.VISIBLE);
+            Verification.setVisibility(View.VISIBLE);
         }
 
 
