@@ -34,6 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:boxStrokeColor="@color/flp"
+                android:layerType="hardware"
+
                 android:hint="@string/search">
 
                 <com.google.android.material.textfield.TextInputEditText

@@ -1,41 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-    <com.google.android.material.textfield.TextInputEditText
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="85dp"
+                android:textStyle="bold"
+                android:text="@string/weare"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="105dp"
+                android:text="@string/sign_up_log_in_to_explore_more"
+                android:textSize="15dp" />
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layp"
+                android:layout_marginTop="125dp"
+                android:textColorHint="@android:color/darker_gray"
+                app:boxStrokeColor="@android:color/white"
+                style="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phonenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/button"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:padding="8dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:id="@+id/layps"
+        android:layout_below="@id/layp"
+        android:textColorHint="@android:color/darker_gray"
+        app:boxStrokeColor="@android:color/white"
+        style="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/button"
+            android:hint="Name"
+            android:inputType="textCapWords"
+            android:maxLength="20"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/laypsc"
+
+        android:layout_below="@id/layps"
+        android:textColorHint="@android:color/darker_gray"
+        app:boxStrokeColor="@android:color/white"
+        style="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/button"
-        android:drawableEnd="@drawable/sicon"
-        android:layout_margin="@dimen/nav_header_vertical_spacing"
-        android:hint="@string/search"
-        android:inputType="text"
+        android:hint="Pass****"
+        android:inputType="textCapWords"
+        android:maxLength="20"
         android:padding="8dp"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-         />
+        android:textColorHint="@android:color/black" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentTop="false"
-            android:text="Test Button"
+    </com.google.android.material.textfield.TextInputLayout>
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </LinearLayout>
+    <LinearLayout
+                    android:id="@+id/linLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <EditText
+                        android:id="@+id/one"
+                        style="@style/pin_edittext_style"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pin_content_desc"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/two"
+                        style="@style/pin_edittext_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pin_content_desc"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/three"
+                        style="@style/pin_edittext_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pin_content_desc"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/four"
+                        style="@style/pin_edittext_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pin_content_desc"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/five"
+                        style="@style/pin_edittext_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pin_content_desc"
+                        android:maxLength="1" />
+
+                    <EditText
+                        android:id="@+id/six"
+                        style="@style/pin_edittext_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/pin_content_desc"
+                        android:maxLength="1" />
+
+
+
+                </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <Button
+        android:id="@+id/verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="bottom"
+        android:text="Get OTP"
+        android:textAlignment="center"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/verification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="0dp"
+        android:textAlignment="center"
+        android:text="Verify OTP"
+        android:textSize="18sp"
+        android:visibility="invisible"
+
+
+        />
+
+
+
+
+</RelativeLayout>

@@ -15,5 +15,11 @@
     <string name="menu_send">Send</string>
     <string name="logout">Logout</string>
     <string name="aravind">Aravind</string>
+    <string name="pin_content_desc">PIN input field</string>
+    <string name="pin_label_text">PIN</string>
     <string name="search">Search</string>
+    <string name="sign_up_log_in_to_explore_more">Sign up/ Log in to explore more</string>
+    <string name="phone_number">Phone number</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="weare">WE ARE POSTER MAKERS</string>
 </resources>
