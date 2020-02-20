@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         banner=FirebaseDatabase.getInstance().getReference().child("Banner");
         dotslayout=(LinearLayout)findViewById(R.id.dotscontainer);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
         manager=new LinearLayoutManager(this);
         reference=FirebaseDatabase.getInstance().getReference("ProductCategory");
         recyclerView=findViewById(R.id.recyclerViewer);

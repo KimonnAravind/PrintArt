@@ -26,8 +26,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +50,10 @@ public class MainActivity extends AppCompatActivity
     private String OTP="Invalid", Combo;
     private FirebaseAuth mAuth;
     private Button createAcc;
+    DatabaseReference UserPortal;
+    HashMap<String,Object> EndUsers = new HashMap<>();
     String code;
+    int temp=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,6 +68,7 @@ public class MainActivity extends AppCompatActivity
         fourth = (EditText) findViewById(R.id.four);
         fifth = (EditText) findViewById(R.id.five);
         Verify=(Button)findViewById(R.id.verify);
+
         pinLayout=(LinearLayout) findViewById(R.id.linLayout);
         Verification=(Button)findViewById(R.id.verification);
         PhoneNumber=(EditText)findViewById(R.id.phonenumber);
@@ -72,8 +79,10 @@ public class MainActivity extends AppCompatActivity
         three=(TextInputLayout)findViewById(R.id.laypsc);
         four=(TextInputLayout)findViewById(R.id.laypscs);
         createAcc=(Button)findViewById(R.id.create);
-
+        UserPortal=FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+
+
         {
 
 
@@ -235,10 +244,56 @@ public class MainActivity extends AppCompatActivity
             }
 
         });
-        createAcc.setOnClickListener(new View.OnClickListener() {
+
+        createAcc.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Ready To push", Toast.LENGTH_SHORT).show();
+            public void onClick(View v)
+            {
+
+                if(!PhoneNumber.getText().toString().isEmpty()&&! name.getText().toString().isEmpty()
+                        &&!password.getText().toString().isEmpty()&&!passwords.getText().toString().isEmpty())
+                {
+                    Log.e("one",password.getText().toString());
+                    Log.e("two",password.getText().toString());
+                    if((password.getText().toString()).equals(passwords.getText().toString()))
+                    {
+                        if(8<=(password.getText().toString()).length())
+                        {Toast.makeText(MainActivity.this, "Ready too Push", Toast.LENGTH_SHORT).show();
+                            EndUsers.put("Name",name.getText().toString());
+                            EndUsers.put("PhoneNumber",PhoneNumber.getText().toString());
+                            EndUsers.put("Password",password.getText().toString());
+                            UserPortal.child("EndUsers").child(PhoneNumber.getText().toString()).updateChildren(EndUsers)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful())
+                                            {
+                                                Toast.makeText(MainActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    });
+                        }
+                        else
+                        {
+                            password.setError("Password should be minimum 8 character!");
+                        }
+                    }
+                    else
+                    {
+                        password.setError("Password mismatch!");
+                        passwords.setError("Password mismatch!");
+                    }
+                }
+                else
+                {
+                    PhoneNumber.setError("All the fields are mandatory to fill!");
+                    name.setError("All the fields are mandatory to fill!");
+                    password.setError("All the fields are mandatory to fill!");
+                    passwords.setError("All the fields are mandatory to fill!");
+                }
             }
         });
 
@@ -278,11 +333,39 @@ public class MainActivity extends AppCompatActivity
                             PhoneNumber.setEnabled(false);
                             Toast.makeText(MainActivity.this, "Verified", Toast.LENGTH_SHORT).show();
                             PhoneNumber.setEnabled(false);
-                            two.setVisibility(View.VISIBLE);
-                            three.setVisibility(View.VISIBLE);
-                            four.setVisibility(View.VISIBLE);
-                            Verification.setVisibility(View.INVISIBLE);
-                            createAcc.setVisibility(View.VISIBLE);
+                            UserPortal.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                                {
+
+                                    if((dataSnapshot.child("EndUsers").child(PhoneNumber.getText().toString()).exists()))
+                                    {
+                                        if(temp==1) {
+                                            Toast.makeText(MainActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(MainActivity.this, "New User", Toast.LENGTH_SHORT).show();
+                                        two.setVisibility(View.VISIBLE);
+                                        three.setVisibility(View.VISIBLE);
+                                        four.setVisibility(View.VISIBLE);
+                                        Verification.setVisibility(View.INVISIBLE);
+                                        createAcc.setVisibility(View.VISIBLE);
+                                        temp=2;
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
 
                         }
                         else {
