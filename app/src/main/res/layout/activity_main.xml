@@ -193,12 +193,17 @@
 
                 </LinearLayout>
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/temp"
-    android:text="temps"
-    />
+    <Button
+        android:id="@+id/temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginBottom="64dp"
+        android:text="temps"
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/verify"
@@ -240,6 +245,25 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:visibility="invisible" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-6dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="PRINTART"
+            android:textStyle="normal"
+            android:textSize="15sp"
+            />
+    </androidx.appcompat.widget.Toolbar>
 
 
 </RelativeLayout>

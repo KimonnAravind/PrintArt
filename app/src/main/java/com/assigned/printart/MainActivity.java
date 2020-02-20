@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       /* getSupportActionBar().setTitle("PrintArt Kimonn");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       */ first = (EditText) findViewById(R.id.one);
+        /*getSupportActionBar().setTitle("PrintArt Kimonn");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
+        first = (EditText) findViewById(R.id.one);
         second = (EditText) findViewById(R.id.two);
         sixth = (EditText) findViewById(R.id.six);
         third = (EditText) findViewById(R.id.three);
