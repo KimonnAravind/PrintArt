@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.assigned.printart.Paper.PaperStore;
 import com.google.android.gms.common.internal.ConnectionErrorMessages;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +36,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import io.paperdb.Paper;
+
 public class MainActivity extends AppCompatActivity
 {
     private EditText first;
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity
     private EditText PhoneNumber,name,password,passwords;
     private String OTP="Invalid", Combo;
     private FirebaseAuth mAuth;
-    private Button createAcc;
+    private Button createAcc,temps;
     DatabaseReference UserPortal;
     HashMap<String,Object> EndUsers = new HashMap<>();
     String code;
@@ -59,15 +62,17 @@ public class MainActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setTitle("PrintArt Kimonn");
+       /* getSupportActionBar().setTitle("PrintArt Kimonn");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        first = (EditText) findViewById(R.id.one);
+       */ first = (EditText) findViewById(R.id.one);
         second = (EditText) findViewById(R.id.two);
         sixth = (EditText) findViewById(R.id.six);
         third = (EditText) findViewById(R.id.three);
         fourth = (EditText) findViewById(R.id.four);
         fifth = (EditText) findViewById(R.id.five);
         Verify=(Button)findViewById(R.id.verify);
+
+        Paper.init(this);
 
         pinLayout=(LinearLayout) findViewById(R.id.linLayout);
         Verification=(Button)findViewById(R.id.verification);
@@ -82,6 +87,15 @@ public class MainActivity extends AppCompatActivity
         UserPortal=FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
 
+
+        temps=(Button)findViewById(R.id.temp);
+        temps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         {
 
@@ -269,9 +283,13 @@ public class MainActivity extends AppCompatActivity
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful())
                                             {
+                                                Paper.book().write(PaperStore.UserLoginID,PhoneNumber.getText().toString());
+                                                Paper.book().write(PaperStore.UserLoginCode,password.getText().toString());
                                                 Toast.makeText(MainActivity.this, "Account Created Successfully", Toast.LENGTH_SHORT).show();
                                                 Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                                 startActivity(intent);
+
+
                                             }
                                         }
                                     });
@@ -340,7 +358,13 @@ public class MainActivity extends AppCompatActivity
 
                                     if((dataSnapshot.child("EndUsers").child(PhoneNumber.getText().toString()).exists()))
                                     {
-                                        if(temp==1) {
+                                        if(temp==1)
+                                        {
+                                            Paper.book().write(PaperStore.UserLoginID,PhoneNumber.getText().toString());
+                                            String pw=dataSnapshot.child("EndUsers")
+                                                    .child(PhoneNumber.getText().toString())
+                                                    .child("Password").getValue().toString();
+                                            Paper.book().write(PaperStore.UserLoginCode,pw);
                                             Toast.makeText(MainActivity.this, "Welcome back", Toast.LENGTH_SHORT).show();
                                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                             startActivity(intent);

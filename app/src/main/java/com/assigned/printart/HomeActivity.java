@@ -9,7 +9,9 @@ import com.assigned.printart.FirebListen.FirebaseViewer;
 import com.assigned.printart.Model.Banners;
 import com.assigned.printart.Model.DisplayCategory;
 import com.assigned.printart.Model.Banners;
+import com.assigned.printart.Model.EndUsers;
 import com.assigned.printart.Model.NestedCategory;
+import com.assigned.printart.Paper.PaperStore;
 import com.assigned.printart.Transform.Transformer;
 import com.assigned.printart.Viewer.CategoryViewHolder;
 import com.assigned.printart.Viewer.NestedCategoryViewHolder;
@@ -58,6 +60,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import io.paperdb.Paper;
+
 public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -84,12 +88,18 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         banner=FirebaseDatabase.getInstance().getReference().child("Banner");
         dotslayout=(LinearLayout)findViewById(R.id.dotscontainer);
         Toolbar toolbar = findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         manager=new LinearLayoutManager(this);
         reference=FirebaseDatabase.getInstance().getReference("ProductCategory");
         recyclerView=findViewById(R.id.recyclerViewer);
         recyclerView.setLayoutManager(manager);
         firebaseViewer=this;
+        Paper.init(this);
+
+
+
+        DatabaseReference UserPortal;
+        UserPortal= FirebaseDatabase.getInstance().getReference();
 
         loadbanners();
      ////   dotsview(positionpro++);
@@ -98,13 +108,40 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         viewPager = (ViewPager)findViewById(R.id.vp);
         viewPager2 = (ViewPager)findViewById(R.id.vsp);
         viewPager.setPageTransformer(true,new Transformer());
-
         viewPager2.setPageTransformer(true,new Transformer());
 
         Random random = new Random();
         int randomNumber = random.nextInt(4) ;
         Query sorting;
         Log.e("Printing","Prints"+randomNumber);
+
+        Toast.makeText(HomeActivity.this, ""+Paper.book().read(PaperStore.UserLoginCode), Toast.LENGTH_SHORT).show();
+
+
+        /*UserPortal.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+            if(dataSnapshot.child("EndUsers").child(PhoneNumber).exists())
+            {
+                EndUsers userdata =dataSnapshot.child("EndUsers").child(PhoneNumber)
+                        .getValue(EndUsers.class);
+
+                if(userdata.getPhoneNumber().equals(PhoneNumber))
+                {
+                    Toast.makeText(HomeActivity.this, ""+userdata.getPhoneNumber(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HomeActivity.this, "is"+PaperStore.UserLoginID, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });*/
+
         switch (randomNumber)
         {
             case 0:
