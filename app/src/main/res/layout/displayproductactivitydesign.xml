@@ -6,38 +6,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="2dp"
     app:cardCornerRadius="10dp">
+
+
+
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="274dp"
-            android:layout_height="80dp"
-            android:layout_above="@+id/images"
-            android:layout_marginBottom="-80dp"
-            android:text="Product Name"
+        <ImageView
+            android:id="@+id/wish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/images"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="120dp"
+            android:layout_toRightOf="@id/productofferPrice"
 
-            android:textAlignment="center" />
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            />
+
+
 
         <ImageView
             android:id="@+id/images"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="0dp"
             android:background="@android:color/white"
             />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product Price"
+            android:id="@+id/name"
+            android:layout_marginLeft="10dp"
+            android:text="Product Name"
+            android:textSize="20dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
             android:layout_below="@+id/images"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptioN"
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:text="Product Description"
+            android:layout_below="@+id/name"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/productofferPrice"
+            android:text="Product SP"
+            android:textSize="18dp"
+            android:textColor="@android:color/black"
+            android:textStyle="italic|bold"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/descriptioN"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/productorigialPrice"
+            android:text="Product MC"
+            android:layout_toRightOf="@id/productofferPrice"
+            android:layout_below="@id/descriptioN"
+            android:layout_marginLeft="15dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PRINTART SIVAKASI"
+            android:layout_below="@id/productofferPrice"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:textSize="15dp"
+
             />
 
 
 
+
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+
+
+
+    </androidx.cardview.widget.CardView>

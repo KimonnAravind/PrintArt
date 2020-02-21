@@ -3,18 +3,23 @@ package com.assigned.printart.Model;
 public class DisplayProducts
 {
 
-    private String Pro,ProID,type,type1;
+    private String Pro,ProID,type,type1,Pame,Pdes,PpriceO,Psp;
 
     public DisplayProducts()
     {
 
     }
 
-    public DisplayProducts(String pro, String proID, String type, String type1) {
+
+    public DisplayProducts(String pro, String proID, String type, String type1, String pame, String pdes, String ppriceO, String psp) {
         Pro = pro;
         ProID = proID;
         this.type = type;
         this.type1 = type1;
+        Pame = pame;
+        Pdes = pdes;
+        PpriceO = ppriceO;
+        Psp = psp;
     }
 
     public String getPro() {
@@ -47,5 +52,37 @@ public class DisplayProducts
 
     public void setType1(String type1) {
         this.type1 = type1;
+    }
+
+    public String getPame() {
+        return Pame;
+    }
+
+    public void setPame(String pame) {
+        Pame = pame;
+    }
+
+    public String getPdes() {
+        return Pdes;
+    }
+
+    public void setPdes(String pdes) {
+        Pdes = pdes;
+    }
+
+    public String getPpriceO() {
+        return PpriceO;
+    }
+
+    public void setPpriceO(String ppriceO) {
+        PpriceO = ppriceO;
+    }
+
+    public String getPsp() {
+        return Psp;
+    }
+
+    public void setPsp(String psp) {
+        Psp = psp;
     }
 }

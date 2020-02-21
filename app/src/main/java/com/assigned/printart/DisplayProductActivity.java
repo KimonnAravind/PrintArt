@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.TypeEvaluator;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -68,9 +69,6 @@ public class DisplayProductActivity extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
-
-
-
         FirebaseRecyclerOptions<DisplayProducts> options=
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(sorting, DisplayProducts.class)
                         .build();
@@ -79,7 +77,12 @@ public class DisplayProductActivity extends AppCompatActivity
         {
 
             @Override
-            protected void onBindViewHolder(@NonNull DisplayProductViewHolder holder, int position, @NonNull final DisplayProducts model) {
+            protected void onBindViewHolder(@NonNull final DisplayProductViewHolder holder, int position, @NonNull final DisplayProducts model) {
+                holder.Pname.setText(model.getPame());
+                holder.PSPrice.setText("₹"+model.getPsp());
+                holder.POPrice.setText(model.getPpriceO()+" ");
+                holder.Pdes.setText(model.getPdes());
+                holder.POPrice.setPaintFlags(holder.POPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 Picasso.get().load(model.getPro()).into(holder.imgv);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +92,8 @@ public class DisplayProductActivity extends AppCompatActivity
                         Intent intent = new Intent(DisplayProductActivity.this, ShowDetailsActivity.class);
                        intent.putExtra("Display", model.getProID());
                         intent.putExtra("Category", CategoryID);
-                       startActivity(intent);
+                        Toast.makeText(DisplayProductActivity.this, ""+model.getPame(), Toast.LENGTH_SHORT).show();
+                       //startActivity(intent);
 
                         Log.e("CATEGORY ID IS: ",CategoryID);
                         Log.e("Display ID IS: ", model.getProID());
@@ -111,10 +115,7 @@ public class DisplayProductActivity extends AppCompatActivity
             }
 
         };
-
         recyclerViewdisplay.setAdapter(adapter2);
         adapter2.startListening();
-
-
     }
 }

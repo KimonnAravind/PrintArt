@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".ShowDetailsActivity"></activity>
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".DisplayProductActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
