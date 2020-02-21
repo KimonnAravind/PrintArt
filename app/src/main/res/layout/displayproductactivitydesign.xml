@@ -13,21 +13,6 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/wish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/images"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="120dp"
-            android:layout_toRightOf="@id/productofferPrice"
-
-            android:src="@drawable/ic_favorite_border_black_24dp"
-            />
-
-
-
         <ImageView
             android:id="@+id/images"
             android:layout_width="match_parent"
@@ -89,12 +74,43 @@
             android:textSize="15dp"
 
             />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/images"
+            android:layout_toRightOf="@id/descriptioN"
+
+            android:background="@android:color/white"
+            android:layout_marginLeft="90dp"
+            >
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/locl_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"
+                app:backgroundTintMode="screen"
+                android:background="@android:color/white"
+                android:backgroundTintMode="screen"
+                android:hapticFeedbackEnabled="false"
+                android:src="@drawable/ic_favorite_border_black_24dp"
+                app:backgroundTint="@android:color/black"
+                app:elevation="2dp"
+                app:fabSize="mini"
+                 />
 
 
 
+        </FrameLayout>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            android:visibility="invisible"
+            android:id="@id/temp"
+            />
     </RelativeLayout>
-
 
 
     </androidx.cardview.widget.CardView>

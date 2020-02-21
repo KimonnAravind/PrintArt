@@ -1,6 +1,5 @@
 package com.assigned.printart;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,8 +7,6 @@ import com.assigned.printart.Adapter.Adapter;
 import com.assigned.printart.FirebListen.FirebaseViewer;
 import com.assigned.printart.Model.Banners;
 import com.assigned.printart.Model.DisplayCategory;
-import com.assigned.printart.Model.Banners;
-import com.assigned.printart.Model.EndUsers;
 import com.assigned.printart.Model.NestedCategory;
 import com.assigned.printart.Paper.PaperStore;
 import com.assigned.printart.Transform.Transformer;
@@ -21,11 +18,9 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -50,7 +45,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.view.Menu;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -78,6 +72,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
     FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
     RecyclerView.LayoutManager manager;
+    String s;
     int positionpro =0;
     /*RecyclerView.LayoutManager layoutManager, layoutManager1;*/
     @Override
@@ -85,6 +80,13 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Paper.init(this);
+        s=Paper.book().read(PaperStore.UserLoginCode);
+        if(s == null || s.isEmpty())
+        {
+            Paper.book().write(PaperStore.UserLoginCode,"guestAcc");
+        }
+
         banner=FirebaseDatabase.getInstance().getReference().child("Banner");
         dotslayout=(LinearLayout)findViewById(R.id.dotscontainer);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -94,10 +96,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         recyclerView=findViewById(R.id.recyclerViewer);
         recyclerView.setLayoutManager(manager);
         firebaseViewer=this;
-        Paper.init(this);
-
-
-
         DatabaseReference UserPortal;
         UserPortal= FirebaseDatabase.getInstance().getReference();
 
@@ -113,10 +111,16 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer{
         Random random = new Random();
         int randomNumber = random.nextInt(4) ;
         Query sorting;
-        Log.e("Printing","Prints"+randomNumber);
+
+
+
+
+
+
+
 
         Toast.makeText(HomeActivity.this, ""+Paper.book().read(PaperStore.UserLoginCode), Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this, ""+PaperStore.UserLoginID, Toast.LENGTH_SHORT).show();
 
         /*UserPortal.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

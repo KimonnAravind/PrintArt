@@ -8,18 +8,20 @@ package com.assigned.printart.Viewer;
         import androidx.recyclerview.widget.RecyclerView;
 
         import com.assigned.printart.R;
+        import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class DisplayProductViewHolder extends RecyclerView.ViewHolder
 {
-    public static ImageView imgv,wish;
+    public static ImageView imgv,temps;
+    public static FloatingActionButton locl_buttons;
     public static TextView Pname,POPrice,PSPrice,Pdes;
 
     public DisplayProductViewHolder(@NonNull View itemView) {
         super(itemView);
         imgv=itemView.findViewById(R.id.images);
-        wish=itemView.findViewById(R.id.wish);
-
+        temps=itemView.findViewById(R.id.temp);
+        locl_buttons=itemView.findViewById(R.id.locl_button);
         Pname=itemView.findViewById(R.id.name);
         POPrice=itemView.findViewById(R.id.productorigialPrice);
         PSPrice=itemView.findViewById(R.id.productofferPrice);
