@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,7 +40,7 @@ import java.util.HashMap;
 
 import io.paperdb.Paper;
 
-public class DisplayProductActivity extends AppCompatActivity
+public class DisplayProductActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     public RecyclerView recyclerViewdisplay;
     RecyclerView.LayoutManager layoutManager;
@@ -181,5 +183,12 @@ public class DisplayProductActivity extends AppCompatActivity
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+    {
+        int click=menuItem.getItemId();
+        return false;
     }
 }
