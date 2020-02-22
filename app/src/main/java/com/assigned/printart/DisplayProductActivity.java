@@ -40,7 +40,7 @@ import java.util.HashMap;
 
 import io.paperdb.Paper;
 
-public class DisplayProductActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class DisplayProductActivity extends AppCompatActivity
 {
     public RecyclerView recyclerViewdisplay;
     RecyclerView.LayoutManager layoutManager;
@@ -125,11 +125,6 @@ public class DisplayProductActivity extends AppCompatActivity implements Navigat
                                             }
                                         }
                                     });*/
-
-
-
-
-
                     }
                 });
 
@@ -185,10 +180,5 @@ public class DisplayProductActivity extends AppCompatActivity implements Navigat
 
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
-    {
-        int click=menuItem.getItemId();
-        return false;
-    }
+
 }

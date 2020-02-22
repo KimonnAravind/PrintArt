@@ -8,5 +8,5 @@
         android:icon="@drawable/thoppi"
         android:title="@string/action_settings"
 
-        app:showAsAction="never" />
+        app:showAsAction="never" />d
 </menu>

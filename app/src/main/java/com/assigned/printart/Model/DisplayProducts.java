@@ -19,6 +19,7 @@ public class DisplayProducts
         Pame = pame;
         Pdes = pdes;
         PpriceO = ppriceO;
+
         Psp = psp;
     }
 

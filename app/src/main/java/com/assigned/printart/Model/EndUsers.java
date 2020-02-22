@@ -2,17 +2,18 @@ package com.assigned.printart.Model;
 
 public class EndUsers
 {
-private String Name,Password,PhoneNumber;
+private String Name,Password,PhoneNumber,DP;
 
 public EndUsers()
 {
 
 }
 
-    public EndUsers(String name, String password, String phoneNumber) {
+    public EndUsers(String name, String password, String phoneNumber, String DP) {
         Name = name;
         Password = password;
         PhoneNumber = phoneNumber;
+        this.DP = DP;
     }
 
     public String getName() {
@@ -37,5 +38,13 @@ public EndUsers()
 
     public void setPhoneNumber(String phoneNumber) {
         PhoneNumber = phoneNumber;
+    }
+
+    public String getDP() {
+        return DP;
+    }
+
+    public void setDP(String DP) {
+        this.DP = DP;
     }
 }

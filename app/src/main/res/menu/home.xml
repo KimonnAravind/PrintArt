@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+<!--
     <item
         android:id="@+id/action_Logout"
         android:orderInCategory="100"
@@ -15,5 +16,6 @@
         android:icon="@drawable/thoppi"
         android:title="@string/logout"
         app:showAsAction="never" />
+-->
 
 </menu>
