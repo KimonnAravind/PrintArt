@@ -56,7 +56,7 @@ public class DisplayProductActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_product);
-        str1=Paper.book().read(PaperStore.UserLoginCode);
+        str1=Paper.book().read(PaperStore.UserLoginID);
         Toast.makeText(this, ""+str1, Toast.LENGTH_SHORT).show();
 
         recyclerViewdisplay=(RecyclerView)findViewById(R.id.recyclerViewDisplay);
@@ -65,7 +65,7 @@ public class DisplayProductActivity extends AppCompatActivity
         CategoryID=getIntent().getStringExtra("Category");
         TypeID=getIntent().getStringExtra("TypeID");
         DisplayReference= FirebaseDatabase.getInstance().getReference().child("ShowingProducts").child(CategoryID);
-        wishListReference=FirebaseDatabase.getInstance().getReference().child("WishList").child("Kimonn");
+        wishListReference=FirebaseDatabase.getInstance().getReference().child("WishList").child(str1);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewdisplay.setLayoutManager(gridLayoutManager);
 
@@ -170,7 +170,7 @@ public class DisplayProductActivity extends AppCompatActivity
                 wishListReference.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Log.d("Sending", "Success!");
+                        Toast.makeText(DisplayProductActivity.this, "Added to wishlist!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

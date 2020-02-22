@@ -266,9 +266,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
               Toast.makeText(HomeActivity.this, "DP", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
         myadapter= new Adapter(this,bannersList);
         viewPager.setAdapter(myadapter);
 
@@ -411,7 +408,11 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         int id = menuItem.getItemId();
         if(id==R.id.nav_gallery)
         {
-            Toast.makeText(this, "Gallery", Toast.LENGTH_SHORT).show();
+            Paper.book().destroy();
+            Paper.book().write(PaperStore.UserLoginID,"+910000000000");
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         }
         else if(id==R.id.nav_home)
         {
