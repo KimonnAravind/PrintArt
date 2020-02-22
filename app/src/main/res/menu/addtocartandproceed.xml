@@ -5,14 +5,14 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:icon="@drawable/thoppi"
+        android:icon="@drawable/hats"
         android:title="@string/action_settings"
 
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settingsa"
         android:orderInCategory="100"
-        android:icon="@drawable/thoppi"
+        android:icon="@drawable/hats"
         android:title="@string/action_settings"
         android:iconTint="@android:color/black"
 
