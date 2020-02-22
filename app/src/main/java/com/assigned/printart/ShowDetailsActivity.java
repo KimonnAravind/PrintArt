@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.assigned.printart.Adapter.Adapter;
@@ -34,11 +36,13 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     ViewPager products;
     ProductAdapter aptr;
     ProductFirebaseViewer productFirebaseViewer;
+
     DatabaseReference Productbanner;
     private List<ProductBanners> productBannersList= new ArrayList<>();
     private Timer timer;
     private int currentposition=0;
     private DatabaseReference ProductDetailsRef;
+    private TextView Pname,PDes,POprice,PSprice,Sellers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +51,39 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
       CategoryID=getIntent().getStringExtra("Category");
         productFirebaseViewer=this;
         Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts")
-                .child(CategoryID).child(DisplayID).child("images");
+                .child(CategoryID).child(DisplayID);
         products=(ViewPager)findViewById(R.id.productviewerpage);
         loadimages();
         products.setPageTransformer(true,new Transformer());
+        Pname=(TextView)findViewById(R.id.ProductName);
+        PDes=(TextView)findViewById(R.id.ProductDescription);
+        POprice=(TextView)findViewById(R.id.originalPrice);
+        PSprice=(TextView)findViewById(R.id.sellingprice);
+        Sellers=(TextView)findViewById(R.id.sell);
 
+        Productbanner.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+            if(dataSnapshot.exists())
+            {
+                Toast.makeText(ShowDetailsActivity.this, ""+dataSnapshot.child("Psp").getValue().toString(), Toast.LENGTH_SHORT).show();
+
+            Pname.setText(dataSnapshot.child("Pame").getValue().toString());
+            PDes.setText(dataSnapshot.child("Pdes").getValue().toString());
+                POprice.setText("₹"+dataSnapshot.child("PpriceO").getValue().toString());
+                POprice.setPaintFlags(POprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                PSprice.setText("₹"+dataSnapshot.child("Psp").getValue().toString());
+                Sellers.setText(dataSnapshot.child("Seller").getValue().toString());
+
+            }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
@@ -67,11 +99,11 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     @Override
     public void Loadfailed(String string)
     {
-        Toast.makeText(this, ""+string, Toast.LENGTH_SHORT).show();
+
     }
     private void loadimages()
     {
-        Productbanner.addListenerForSingleValueEvent(new ValueEventListener() {
+        Productbanner.child("images").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

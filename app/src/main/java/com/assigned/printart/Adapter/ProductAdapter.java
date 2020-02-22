@@ -69,7 +69,6 @@ public class ProductAdapter  extends PagerAdapter
         Picasso.get().load(productBannersList.get(position).getImage()).into( product_banner_images);
         container.addView(view);
 
-        Toast.makeText(context, ""+getCount(), Toast.LENGTH_SHORT).show();
         return view;
     }
 }

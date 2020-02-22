@@ -9,4 +9,12 @@
         android:title="@string/action_settings"
 
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settingsa"
+        android:orderInCategory="100"
+        android:icon="@drawable/thoppi"
+        android:title="@string/action_settings"
+        android:iconTint="@android:color/black"
+
+        app:showAsAction="never" />
 </menu>

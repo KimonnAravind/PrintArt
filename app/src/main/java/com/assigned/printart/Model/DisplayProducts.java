@@ -3,15 +3,14 @@ package com.assigned.printart.Model;
 public class DisplayProducts
 {
 
-    private String Pro,ProID,type,type1,Pame,Pdes,PpriceO,Psp;
+    private String Pro,ProID,type,type1,Pame,Pdes,PpriceO,Psp,Seller;
 
     public DisplayProducts()
     {
 
     }
 
-
-    public DisplayProducts(String pro, String proID, String type, String type1, String pame, String pdes, String ppriceO, String psp) {
+    public DisplayProducts(String pro, String proID, String type, String type1, String pame, String pdes, String ppriceO, String psp, String seller) {
         Pro = pro;
         ProID = proID;
         this.type = type;
@@ -19,8 +18,8 @@ public class DisplayProducts
         Pame = pame;
         Pdes = pdes;
         PpriceO = ppriceO;
-
         Psp = psp;
+        Seller = seller;
     }
 
     public String getPro() {
@@ -85,5 +84,13 @@ public class DisplayProducts
 
     public void setPsp(String psp) {
         Psp = psp;
+    }
+
+    public String getSeller() {
+        return Seller;
+    }
+
+    public void setSeller(String seller) {
+        Seller = seller;
     }
 }

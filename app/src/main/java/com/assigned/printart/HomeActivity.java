@@ -23,6 +23,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -49,6 +50,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,7 +119,9 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         s=Paper.book().read(PaperStore.UserLoginID);
         if(s == null || s.isEmpty())
         {
-           Paper.book().write(PaperStore.UserLoginID,"+910000000000");
+           Paper.book().write(PaperStore.UserLoginID,"0000000000");
+            s=Paper.book().read(PaperStore.UserLoginID);
+
         }
 
 
@@ -365,8 +369,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                Log.e("Kimonn1",""+currentPosition);
-
                 viewPager.setCurrentItem(currentPosition,true);
                 viewPager2.setCurrentItem(currentPosition,true);
                 currentPosition=currentPosition+1;
@@ -409,7 +411,7 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         if(id==R.id.nav_gallery)
         {
             Paper.book().destroy();
-            Paper.book().write(PaperStore.UserLoginID,"+910000000000");
+            Paper.book().write(PaperStore.UserLoginID,"0000000000");
             Intent intent = getIntent();
             finish();
             startActivity(intent);
@@ -427,7 +429,7 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
 
 
 
-/*private void dotsview(int movingposition)
+private void dotsview(int movingposition)
 {
     if(dotslayout.getChildCount()>0)
     {
@@ -455,6 +457,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         layoutParams.setMargins(4,0,4,0);
         dotslayout.addView(dotArray[i],layoutParams);
     }
-}*/
+}
 
 }

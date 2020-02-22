@@ -15,7 +15,7 @@ public class DisplayProductViewHolder extends RecyclerView.ViewHolder
 {
     public static ImageView imgv,temps;
     public static FloatingActionButton locl_buttons;
-    public static TextView Pname,POPrice,PSPrice,Pdes;
+    public static TextView Pname,POPrice,PSPrice,Pdes,Seller;
 
     public DisplayProductViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -26,6 +26,7 @@ public class DisplayProductViewHolder extends RecyclerView.ViewHolder
         POPrice=itemView.findViewById(R.id.productorigialPrice);
         PSPrice=itemView.findViewById(R.id.productofferPrice);
         Pdes=itemView.findViewById(R.id.descriptioN);
+        Seller=itemView.findViewById(R.id.seller);
 
     }
 }

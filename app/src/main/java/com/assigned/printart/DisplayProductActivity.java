@@ -96,8 +96,9 @@ public class DisplayProductActivity extends AppCompatActivity
             protected void onBindViewHolder(@NonNull final DisplayProductViewHolder holder, int position, @NonNull final DisplayProducts model) {
                 holder.Pname.setText(model.getPame());
                 holder.PSPrice.setText("₹"+model.getPsp());
-                holder.POPrice.setText(model.getPpriceO()+" ");
+                holder.POPrice.setText("₹"+model.getPpriceO()+" ");
                 holder.Pdes.setText(model.getPdes());
+                holder.Seller.setText(model.getSeller());
                 holder.POPrice.setPaintFlags(holder.POPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 Picasso.get().load(model.getPro()).into(holder.imgv);
 
@@ -105,26 +106,17 @@ public class DisplayProductActivity extends AppCompatActivity
                     @Override
                     public void onClick(View v)
                     {
-                        copyrecord(DisplayReference.child(model.getProID()),wishListReference.child(model.getProID()));
 
+                        if(!str1.equals("0000000000")) {
 
+                            copyrecord(DisplayReference.child(model.getProID()), wishListReference.child(model.getProID()));
+                        }
+                        else
+                        {
+                            Intent intent = new Intent( DisplayProductActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
 
-
-
-
-
-                            /*HashMap<String,Object> WishList = new HashMap<>();
-                            WishList.put("PID",model.getProID());
-                            wishListReference.child(str1).updateChildren(WishList)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful())
-                                            {
-                                                Toast.makeText(DisplayProductActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });*/
                     }
                 });
 
@@ -135,8 +127,7 @@ public class DisplayProductActivity extends AppCompatActivity
                         Intent intent = new Intent(DisplayProductActivity.this, ShowDetailsActivity.class);
                        intent.putExtra("Display", model.getProID());
                         intent.putExtra("Category", CategoryID);
-                        Toast.makeText(DisplayProductActivity.this, ""+model.getPame(), Toast.LENGTH_SHORT).show();
-                       //startActivity(intent);
+                        startActivity(intent);
 
                         Log.e("CATEGORY ID IS: ",CategoryID);
                         Log.e("Display ID IS: ", model.getProID());
