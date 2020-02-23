@@ -2,12 +2,18 @@ package com.assigned.printart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,8 +23,17 @@ import com.assigned.printart.Adapter.ProductAdapter;
 import com.assigned.printart.FirebListen.FirebaseViewer;
 import com.assigned.printart.FirebListen.ProductFirebaseViewer;
 import com.assigned.printart.Model.Banners;
+import com.assigned.printart.Model.DisplayCategory;
+import com.assigned.printart.Model.DisplayProducts;
+import com.assigned.printart.Model.NestedCategory;
 import com.assigned.printart.Model.ProductBanners;
 import com.assigned.printart.Transform.Transformer;
+import com.assigned.printart.Viewer.Bottom;
+import com.assigned.printart.Viewer.CategoryViewHolder;
+import com.assigned.printart.Viewer.NestedCategoryViewHolder;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,12 +52,16 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     ProductAdapter aptr;
     ProductFirebaseViewer productFirebaseViewer;
 
-    DatabaseReference Productbanner;
+    DatabaseReference Productbanner,TypeDetails;
     private List<ProductBanners> productBannersList= new ArrayList<>();
     private Timer timer;
     private int currentposition=0;
     private DatabaseReference ProductDetailsRef;
     private TextView Pname,PDes,POprice,PSprice,Sellers;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager manager;
+    FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
+    FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +69,14 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
       DisplayID=getIntent().getStringExtra("Display");
       CategoryID=getIntent().getStringExtra("Category");
         productFirebaseViewer=this;
-        Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts")
-                .child(CategoryID).child(DisplayID);
+        manager=new LinearLayoutManager(this);
+
+        Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
+
+        TypeDetails=FirebaseDatabase.getInstance().getReference().child("ProductCategory")
+                .child(CategoryID);
+        ProductDetailsRef=FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
+
         products=(ViewPager)findViewById(R.id.productviewerpage);
         loadimages();
         products.setPageTransformer(true,new Transformer());
@@ -61,7 +86,11 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         PSprice=(TextView)findViewById(R.id.sellingprice);
         Sellers=(TextView)findViewById(R.id.sell);
 
-        Productbanner.addValueEventListener(new ValueEventListener() {
+
+        recyclerView=(RecyclerView)findViewById(R.id.recyclerViewin);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+        Productbanner .child(CategoryID).child(DisplayID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
@@ -75,7 +104,21 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
                 POprice.setPaintFlags(POprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 PSprice.setText("₹"+dataSnapshot.child("Psp").getValue().toString());
                 Sellers.setText(dataSnapshot.child("Seller").getValue().toString());
+            }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        TypeDetails.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+            {
+            if(dataSnapshot.exists())
+            {
+                Toast.makeText(ShowDetailsActivity.this, ""+dataSnapshot.child("Type1").getValue().toString(), Toast.LENGTH_SHORT).show();
             }
             }
 
@@ -84,11 +127,37 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
 
             }
         });
-
-
     }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
 
+
+        FirebaseRecyclerOptions<DisplayProducts> options=
+                new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(ProductDetailsRef.child(CategoryID), DisplayProducts.class)
+                        .build();
+        FirebaseRecyclerAdapter<DisplayProducts, Bottom> optionis=new FirebaseRecyclerAdapter<DisplayProducts, Bottom>(options) {
+            @Override
+            protected void onBindViewHolder(@NonNull Bottom holder, int position, @NonNull DisplayProducts model) {
+                Picasso.get().load(model.getPro()).into(holder.pics);
+
+            }
+
+            @NonNull
+            @Override
+            public Bottom onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom,parent,false);
+               Bottom holder= new Bottom(view);
+
+                return holder;
+            }
+        };
+        recyclerView.setAdapter(optionis);
+        optionis.startListening();
+
+    }
 
     @Override
     public void Loadsuccess(List<ProductBanners> productBannersList)
@@ -103,7 +172,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     }
     private void loadimages()
     {
-        Productbanner.child("images").addListenerForSingleValueEvent(new ValueEventListener() {
+        Productbanner.child(CategoryID).child(DisplayID).child("images").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -117,32 +186,5 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             }
         });
     }
-
-private void slideshow()
-{
-    final Handler handler= new Handler();
-    final Runnable runnable= new Runnable()
-
-    {
-    @Override
-    public void run()
-    {    if(currentposition==productBannersList.size())
-    {
-
-        currentposition=0;
-        products.setCurrentItem(currentposition++,true);
-    }
-    }
-
-};
-timer=new Timer();
-timer.schedule(new TimerTask() {
-    @Override
-    public void run()
-    {
-    handler.post(runnable);
-    }
-},25,250);
-}
 
 }

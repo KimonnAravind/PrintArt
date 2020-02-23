@@ -140,37 +140,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         Query sorting;
 
 
-
-
-
-
-
-
-
-        /*UserPortal.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-            if(dataSnapshot.child("EndUsers").child(PhoneNumber).exists())
-            {
-                EndUsers userdata =dataSnapshot.child("EndUsers").child(PhoneNumber)
-                        .getValue(EndUsers.class);
-
-                if(userdata.getPhoneNumber().equals(PhoneNumber))
-                {
-                    Toast.makeText(HomeActivity.this, ""+userdata.getPhoneNumber(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(HomeActivity.this, "is"+PaperStore.UserLoginID, Toast.LENGTH_SHORT).show();
-
-                }
-            }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
-
         switch (randomNumber)
         {
             case 0:
@@ -201,7 +170,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
                 sorting=reference;
             }
         }
-
 
         FirebaseRecyclerOptions<DisplayCategory> options = new FirebaseRecyclerOptions.Builder<DisplayCategory>()
                 .setQuery(sorting,DisplayCategory.class).build();
@@ -255,8 +223,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         adapter.startListening();
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
