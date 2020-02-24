@@ -2,6 +2,7 @@ package com.assigned.printart;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ import java.util.TimerTask;
 public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer {
     String DisplayID,CategoryID;
     ViewPager products;
+    RadioButton withf,withoutf;
     ProductAdapter aptr;
     ProductFirebaseViewer productFirebaseViewer;
 
@@ -63,8 +66,10 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     RecyclerView.LayoutManager manager;
     FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
     FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
+    int x=10,y,z;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
       DisplayID=getIntent().getStringExtra("Display");
@@ -92,7 +97,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         POprice=(TextView)findViewById(R.id.originalPrice);
         PSprice=(TextView)findViewById(R.id.sellingprice);
         Sellers=(TextView)findViewById(R.id.sell);
-
+        withf=(RadioButton)findViewById(R.id.withF);
+        withoutf=(RadioButton)findViewById(R.id.withoutF);
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclerViewin);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -101,11 +107,15 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-            if(dataSnapshot.exists())
-            {
+            if(dataSnapshot.exists()) {
+
+
+
             Pname.setText(dataSnapshot.child("Pame").getValue().toString());
             PDes.setText(dataSnapshot.child("Pdes").getValue().toString());
                 POprice.setText("₹"+dataSnapshot.child("PpriceO").getValue().toString());
+                y=Integer.parseInt(dataSnapshot.child("Psp").getValue().toString());
+                z=Integer.parseInt(dataSnapshot.child("PpriceO").getValue().toString());
                 POprice.setPaintFlags(POprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 PSprice.setText("₹"+dataSnapshot.child("Psp").getValue().toString());
                 Sellers.setText(dataSnapshot.child("Seller").getValue().toString());
@@ -186,5 +196,47 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             }
         });
     }
+
+    public void OnRadioChecked(View view)
+    {
+boolean isSelected = ((AppCompatRadioButton)view).isChecked();
+switch (view.getId())
+{
+    case R.id.withF:
+    {
+        withFrame();
+        break;
+    }
+    case R.id.withoutF:
+    {
+        WithoutFrame();
+        break;
+
+    }
+}
+    }
+
+    private void WithoutFrame()
+    {
+    if(x>300)
+    {
+        PSprice.setText("₹" + String.valueOf(y));
+        POprice.setText("₹" + String.valueOf(z));
+        x=10;
+    }
+    }
+
+    private void withFrame()
+    {
+        if(x<300)
+        {
+            x = 300;
+            x = x + Integer.parseInt(PSprice.getText().toString().substring(1));
+            //Toast.makeText(this, ""+x, Toast.LENGTH_SHORT).show();
+            PSprice.setText("₹" + String.valueOf(x));
+            POprice.setText("₹" + String.valueOf(x + 250));
+        }
+    }
+
 
 }
