@@ -89,56 +89,41 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         banner=FirebaseDatabase.getInstance().getReference().child("Banner");
         dotslayout=(LinearLayout)findViewById(R.id.dotscontainer);
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = findViewById(R.id.drawer_layoutyes);
         ActionBarDrawerToggle toggle =new ActionBarDrawerToggle( this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-
-
-
         manager=new LinearLayoutManager(this);
-
-
         reference=FirebaseDatabase.getInstance().getReference("ProductCategory");
         recyclerView=findViewById(R.id.recyclerViewer);
         recyclerView.setLayoutManager(manager);
         firebaseViewer=this;
         DatabaseReference UserPortal;
         UserPortal= FirebaseDatabase.getInstance().getReference();
-        Paper.init(this);
-        s=Paper.book().read(PaperStore.UserLoginID);
-        if(s == null || s.isEmpty())
-        {
-           Paper.book().write(PaperStore.UserLoginID,"0000000000");
-            s=Paper.book().read(PaperStore.UserLoginID);
+        EndUserPortal=FirebaseDatabase.getInstance().getReference().child("EndUsers");
 
-        }
-
-
-        EndUserPortal=FirebaseDatabase.getInstance().getReference().child("EndUsers").child(s);
-        loadbanners();
      ////   dotsview(positionpro++);
-        slideshow();
+
 
         viewPager = (ViewPager)findViewById(R.id.vp);
         viewPager2 = (ViewPager)findViewById(R.id.vsp);
         viewPager.setPageTransformer(true,new Transformer());
         viewPager2.setPageTransformer(true,new Transformer());
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Query sorting;
         Random random = new Random();
         int randomNumber = random.nextInt(4) ;
-        Query sorting;
-
 
         switch (randomNumber)
         {
@@ -179,34 +164,34 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
             @Override
             protected void onBindViewHolder(@NonNull CategoryViewHolder holder, int position, @NonNull final DisplayCategory displayCategory)
             {
-            CategoryViewHolder.CategoryName.setText(displayCategory.getCategoryName());
+                CategoryViewHolder.CategoryName.setText(displayCategory.getCategoryName());
 
-            FirebaseRecyclerOptions<NestedCategory> options1= new FirebaseRecyclerOptions.Builder<NestedCategory>()
-                    .setQuery(reference.child(displayCategory.getCategoryID()).child("About"),NestedCategory.class)
-                    .build();
-            adapter1= new FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>(options1) {
-                @Override
-                protected void onBindViewHolder(@NonNull NestedCategoryViewHolder holder, int position, @NonNull final NestedCategory nestedCategory) {
-                    Picasso.get().load(nestedCategory.getProductDescription()).into(holder.IgmV);
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent= new Intent(HomeActivity.this,DisplayProductActivity.class);
-                         intent.putExtra("Category", displayCategory.getCategoryID());
-                            intent.putExtra("TypeID",nestedCategory.getType());
-                            startActivity(intent);
-                        }
-                    });
-                }
-                @NonNull
-                @Override
-                public NestedCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                FirebaseRecyclerOptions<NestedCategory> options1= new FirebaseRecyclerOptions.Builder<NestedCategory>()
+                        .setQuery(reference.child(displayCategory.getCategoryID()).child("About"),NestedCategory.class)
+                        .build();
+                adapter1= new FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>(options1) {
+                    @Override
+                    protected void onBindViewHolder(@NonNull NestedCategoryViewHolder holder, int position, @NonNull final NestedCategory nestedCategory) {
+                        Picasso.get().load(nestedCategory.getProductDescription()).into(holder.IgmV);
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent= new Intent(HomeActivity.this,DisplayProductActivity.class);
+                                intent.putExtra("Category", displayCategory.getCategoryID());
+                                intent.putExtra("TypeID",nestedCategory.getType());
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    @NonNull
+                    @Override
+                    public NestedCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-                    View v2=LayoutInflater.from(getBaseContext()).inflate
-                            (R.layout.nesteddisplay,parent,false);
-                    return new NestedCategoryViewHolder(v2);
-                }
-            };
+                        View v2=LayoutInflater.from(getBaseContext()).inflate
+                                (R.layout.nesteddisplay,parent,false);
+                        return new NestedCategoryViewHolder(v2);
+                    }
+                };
                 adapter1.startListening();
                 adapter1.notifyDataSetChanged();
                 CategoryViewHolder.category_recyclerView.setAdapter(adapter1);
@@ -233,7 +218,7 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Toast.makeText(HomeActivity.this, "DP", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "DP", Toast.LENGTH_SHORT).show();
             }
         });
         myadapter= new Adapter(this,bannersList);
@@ -257,19 +242,28 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
             }
         });
 
+        loadbanners();
+        slideshow();
+        Paper.init(this);
+        s=Paper.book().read(PaperStore.UserLoginID);
+        if(s == null || s.isEmpty())
+        {
+            Paper.book().write(PaperStore.UserLoginID,"0000000000");
+            s=Paper.book().read(PaperStore.UserLoginID);
 
-        EndUserPortal.addValueEventListener(new ValueEventListener() {
+        }
+        EndUserPortal.child(s).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-            if(dataSnapshot.exists())
-            {
-                String x=dataSnapshot.child("DP").getValue().toString();
-              //  Toast.makeText(HomeActivity.this, ""+x, Toast.LENGTH_SHORT).show();
-                Picasso.get().load(x).into(userProfilePicture);
-                userPhonenumber.setText(dataSnapshot.child("PhoneNumber").getValue().toString());
-                userName.setText(dataSnapshot.child("Name").getValue().toString());
-            }
+                if(dataSnapshot.exists())
+                {
+                    String x=dataSnapshot.child("DP").getValue().toString();
+                    //  Toast.makeText(HomeActivity.this, ""+x, Toast.LENGTH_SHORT).show();
+                    Picasso.get().load(x).into(userProfilePicture);
+                    userPhonenumber.setText(dataSnapshot.child("PhoneNumber").getValue().toString());
+                    userName.setText(dataSnapshot.child("Name").getValue().toString());
+                }
             }
 
             @Override
@@ -277,8 +271,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
 
             }
         });
-
-
     }
 
     private void loadbanners()
