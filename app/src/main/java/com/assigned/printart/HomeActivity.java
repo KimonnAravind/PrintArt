@@ -122,20 +122,22 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
     protected void onStart() {
         super.onStart();
         Query sorting;
+       // sorting= reference.orderByChild("CountPost");
+
         Random random = new Random();
         int randomNumber = random.nextInt(4) ;
-
+        Log.e("RANDROM number", String.valueOf(randomNumber));
         switch (randomNumber)
         {
             case 0:
             {
-                sorting= reference.orderByChild("CountPost");
+
+                sorting=reference;
                 break;
             }
 
             case 1:
-            {
-                sorting=reference;
+            { sorting= reference.orderByChild("CountPost");
                 break;
             }
 
@@ -155,7 +157,6 @@ public class HomeActivity extends AppCompatActivity implements  FirebaseViewer,N
                 sorting=reference;
             }
         }
-
         FirebaseRecyclerOptions<DisplayCategory> options = new FirebaseRecyclerOptions.Builder<DisplayCategory>()
                 .setQuery(sorting,DisplayCategory.class).build();
 
