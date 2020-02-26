@@ -1,23 +1,22 @@
 package com.assigned.printart.Viewer;
 
-        import android.view.View;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.assigned.printart.R;
-        import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.assigned.printart.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-
-public class DisplayProductViewHolder extends RecyclerView.ViewHolder
+public class WishListViewHolder extends RecyclerView.ViewHolder
 {
     public static ImageView imgv,temps;
     public static FloatingActionButton locl_buttons;
     public static TextView Pname,POPrice,PSPrice,Pdes,Seller,number;
 
-    public DisplayProductViewHolder(@NonNull View itemView) {
+    public WishListViewHolder(@NonNull View itemView) {
         super(itemView);
         imgv=itemView.findViewById(R.id.images);
         temps=itemView.findViewById(R.id.temp);
@@ -28,6 +27,7 @@ public class DisplayProductViewHolder extends RecyclerView.ViewHolder
         Pdes=itemView.findViewById(R.id.descriptioN);
         Seller=itemView.findViewById(R.id.seller);
 
-
     }
+
+
 }

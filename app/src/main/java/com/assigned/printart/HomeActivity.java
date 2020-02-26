@@ -383,17 +383,13 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
         }
         else if(id==R.id.action_wishlist)
         {
-            Toast.makeText(this, "Wishlist", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(HomeActivity.this, WListACtivity.class);
+        startActivity(intent);
         }
-
-
-
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutyes);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-
     private void dotsview(int movingposition) {
         if (dotslayout.getChildCount() > 0) {
             dotslayout.removeAllViews();
@@ -404,12 +400,9 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
             if (i == movingposition) {
                 Toast.makeText(this, "Active", Toast.LENGTH_SHORT).show();
                 dotArray[i].setImageDrawable(ContextCompat.getDrawable(this, R.drawable.active));
-
             } else {
                 Toast.makeText(this, "InActive", Toast.LENGTH_SHORT).show();
-
                 dotArray[i].setImageDrawable(ContextCompat.getDrawable(this, R.drawable.inactive));
-
             }
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);

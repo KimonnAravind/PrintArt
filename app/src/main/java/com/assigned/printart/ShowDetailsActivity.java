@@ -66,8 +66,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     private TextView Pname,PDes,POprice,PSprice,Sellers;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager manager;
-    FirebaseRecyclerAdapter<DisplayCategory, CategoryViewHolder>adapter;
-    FirebaseRecyclerAdapter<NestedCategory, NestedCategoryViewHolder>adapter1;
+
     int x=10,y,z;
     @Override
     protected void onCreate(Bundle savedInstanceState)

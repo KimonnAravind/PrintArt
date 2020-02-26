@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="2dp"
+    app:cardCornerRadius="10dp">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/images"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="0dp"
+            android:background="@android:color/white"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:layout_marginLeft="10dp"
+            android:text="Product Name"
+            android:textSize="20dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_below="@+id/images"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptioN"
+            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:text="Product Description"
+            android:layout_below="@+id/name"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/productofferPrice"
+            android:text="Product SP"
+            android:textSize="18dp"
+            android:textColor="@android:color/black"
+            android:textStyle="italic|bold"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/descriptioN"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/productorigialPrice"
+            android:text="Product MC"
+            android:layout_toRightOf="@id/productofferPrice"
+            android:layout_below="@id/descriptioN"
+            android:layout_marginLeft="15dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PRINTART SIVAKASI"
+            android:id="@+id/seller"
+            android:layout_below="@id/productofferPrice"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:textSize="15dp"
+
+            />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptioN"
+            android:layout_toRightOf="@id/seller"
+            android:background="@android:color/white"
+            >
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/locl_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/white"
+                app:backgroundTintMode="screen"
+                android:background="@android:color/white"
+                android:backgroundTintMode="screen"
+                android:hapticFeedbackEnabled="false"
+                android:src="@drawable/ic_favorite_border_black_24dp"
+                app:backgroundTint="@android:color/black"
+                app:elevation="2dp"
+                app:fabSize="mini"
+                />
+
+
+
+        </FrameLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite_border_black_24dp"
+            android:visibility="invisible"
+            android:id="@id/temp"
+            />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

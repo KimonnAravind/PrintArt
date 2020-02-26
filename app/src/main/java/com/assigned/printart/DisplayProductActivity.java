@@ -95,9 +95,8 @@ public class DisplayProductActivity extends AppCompatActivity
                         .build();
 
 
-         adapter2=new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options)
+        adapter2=new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options)
         {
-
             @Override
             protected void onBindViewHolder(@NonNull final DisplayProductViewHolder holder, int position, @NonNull final DisplayProducts model) {
                 holder.Pname.setText(model.getPame());
@@ -119,6 +118,7 @@ public class DisplayProductActivity extends AppCompatActivity
                         }
                         else
                         {
+                            Toast.makeText(DisplayProductActivity.this, "Cannot Add", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent( DisplayProductActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
