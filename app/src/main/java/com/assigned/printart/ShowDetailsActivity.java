@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     private int currentposition=0;
     private DatabaseReference ProductDetailsRef;
     TextView t1,t2,t3,t4,t5,t6;
+    private RadioGroup radioGroup;
     private TextView Pname,PDes,POprice,PSprice,Sellers;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager manager;
@@ -75,6 +77,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
       DisplayID=getIntent().getStringExtra("Display");
       CategoryID=getIntent().getStringExtra("Category");
       t1=(TextView)findViewById(R.id.type1);
+      radioGroup=(RadioGroup)findViewById(R.id.radios);
       t2=(TextView)findViewById(R.id.type2);
       t3=(TextView)findViewById(R.id.type3);
       t4=(TextView)findViewById(R.id.type4);
@@ -100,6 +103,10 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         withf=(RadioButton)findViewById(R.id.withF);
         withoutf=(RadioButton)findViewById(R.id.withoutF);
 
+        if(CategoryID.equals("01"))
+        {
+            radioGroup.setVisibility(View.VISIBLE);
+        }
         recyclerView=(RecyclerView)findViewById(R.id.recyclerViewin);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 

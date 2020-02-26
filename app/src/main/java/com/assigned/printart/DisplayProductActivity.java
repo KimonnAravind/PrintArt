@@ -68,15 +68,20 @@ public class DisplayProductActivity extends AppCompatActivity
         wishListReference=FirebaseDatabase.getInstance().getReference().child("WishList").child(str1);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewdisplay.setLayoutManager(gridLayoutManager);
-
+        Toast.makeText(this, ""+TypeID, Toast.LENGTH_SHORT).show();
         if(TypeID.equals("01"))
         {
-            sorting= DisplayReference.orderByChild("type");
+            sorting= DisplayReference.orderByChild("sort1");
         }
-        else if(TypeID.equals("02"))
+            else if(TypeID.equals("02"))
         {
-            sorting= DisplayReference.orderByChild("type1");
+            sorting= DisplayReference.orderByChild("sort2");
         }
+        else if(TypeID.equals("03"))
+        {
+            sorting= DisplayReference.orderByChild("sort3");
+        }
+
 
 
     }
@@ -88,6 +93,7 @@ public class DisplayProductActivity extends AppCompatActivity
         FirebaseRecyclerOptions<DisplayProducts> options=
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(sorting, DisplayProducts.class)
                         .build();
+
 
          adapter2=new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options)
         {
@@ -129,8 +135,6 @@ public class DisplayProductActivity extends AppCompatActivity
                         intent.putExtra("Category", CategoryID);
                         startActivity(intent);
 
-                        Log.e("CATEGORY ID IS: ",CategoryID);
-                        Log.e("Display ID IS: ", model.getProID());
 
                     }
                 });
