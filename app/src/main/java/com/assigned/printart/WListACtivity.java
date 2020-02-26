@@ -38,14 +38,28 @@ public class WListACtivity extends AppCompatActivity
                 .child("7904168617");
 
 
+
         FirebaseRecyclerOptions<DisplayProducts> options=
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(databaseReference, DisplayProducts.class)
                         .build();
 
+
         FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder> adapter =new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull DisplayProductViewHolder holder, int position, @NonNull DisplayProducts model) {
+
+
+
                 Picasso.get().load(model.getPro()).into(holder.imgv);
+            }
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public int getItemViewType(int position) {
+                return position;
             }
 
             @NonNull
