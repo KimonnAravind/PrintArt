@@ -62,6 +62,7 @@ public class WListACtivity extends AppCompatActivity
                 return position;
             }
 
+
             @NonNull
             @Override
             public DisplayProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
