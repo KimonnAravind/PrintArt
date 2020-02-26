@@ -12,6 +12,7 @@ import com.assigned.printart.Paper.PaperStore;
 import com.assigned.printart.Transform.Transformer;
 import com.assigned.printart.Viewer.CategoryViewHolder;
 import com.assigned.printart.Viewer.NestedCategoryViewHolder;
+import com.assigned.printart.ui.home.HomeFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
@@ -30,6 +31,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +67,7 @@ import java.util.TimerTask;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 
-public class HomeActivity extends AppCompatActivity implements FirebaseViewer, NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements FirebaseViewer, NavigationView.OnNavigationItemSelectedListener,BottomNavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     ViewPager viewPager, viewPager2;
@@ -72,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
     private Timer timer;
     private LinearLayout dotslayout;
     int currentPosition = 0;
+
     private DatabaseReference EndUserPortal;
     FirebaseViewer firebaseViewer;
     List<Banners> bannersList = new ArrayList<>();
@@ -103,6 +107,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
         recyclerView = findViewById(R.id.recyclerViewer);
         recyclerView.setLayoutManager(manager);
         firebaseViewer = this;
+
         DatabaseReference UserPortal;
         UserPortal = FirebaseDatabase.getInstance().getReference();
         EndUserPortal = FirebaseDatabase.getInstance().getReference().child("EndUsers");
@@ -111,14 +116,28 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
         viewPager2 = (ViewPager) findViewById(R.id.vsp);
         viewPager.setPageTransformer(true, new Transformer());
         viewPager2.setPageTransformer(true, new Transformer());
+
+
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(this);
+
+
+
     }
 
     @Override
     protected void onStart() {
+
         super.onStart();
         Query sorting;
         // sorting= reference.orderByChild("CountPost");
 
+       /* bar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "TOast", Toast.LENGTH_SHORT).show();
+            }
+        });*/
         Random random = new Random();
         int randomNumber = random.nextInt(4);
         Log.e("RANDROM number", String.valueOf(randomNumber));
@@ -257,6 +276,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
 
             }
         });
+
+
     }
 
     private void loadbanners() {
@@ -344,18 +365,28 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
         return super.onOptionsItemSelected(item);
     }
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+    {
         int id = menuItem.getItemId();
+        Toast.makeText(this, ""+id, Toast.LENGTH_SHORT).show();
         if (id == R.id.nav_gallery) {
             Paper.book().destroy();
             Paper.book().write(PaperStore.UserLoginID, "0000000000");
             Intent intent = getIntent();
             finish();
             startActivity(intent);
+
         } else if (id == R.id.nav_home) {
             Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
 
+
         }
+        else if(id==R.id.action_wishlist)
+        {
+            Toast.makeText(this, "Wishlist", Toast.LENGTH_SHORT).show();
+        }
+
+
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutyes);
         drawerLayout.closeDrawer(GravityCompat.START);
