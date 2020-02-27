@@ -19,6 +19,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -98,6 +99,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layoutyes);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -120,6 +122,9 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
 
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(this);
+
+
+
 
 
 
@@ -300,7 +305,8 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.home, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home, menu);
         return true;
     }
 
@@ -356,13 +362,17 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*int id = item.getItemId();
-        if(id == R.id.action_settings)
-        {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_Logout:
+                Toast.makeText(this, "T", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action:
+                Toast.makeText(this, "Tt", Toast.LENGTH_SHORT).show();
 
-        }*/
-        return super.onOptionsItemSelected(item);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
@@ -386,7 +396,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
         Intent intent = new Intent(HomeActivity.this, WListACtivity.class);
         startActivity(intent);
         }
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutyes);
+           DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutyes);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }

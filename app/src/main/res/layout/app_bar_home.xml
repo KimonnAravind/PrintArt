@@ -18,6 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:background="@color/flp"
             android:overScrollMode="always"
             app:layout_scrollFlags="scroll|enterAlways|snap"
@@ -82,6 +83,8 @@
             app:itemIconTint="@android:color/black"
             app:itemTextColor="@android:color/black"
             app:menu="@menu/bottomappbar" />
+
+
 
     </FrameLayout>
 
