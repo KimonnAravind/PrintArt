@@ -90,7 +90,6 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
       t4=(TextView)findViewById(R.id.type4);
       t5=(TextView)findViewById(R.id.type5);
       t6=(TextView)findViewById(R.id.type6);
-
         Toolbar toolbar = findViewById(R.id.tbar);
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
