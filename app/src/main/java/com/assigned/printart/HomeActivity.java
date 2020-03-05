@@ -376,7 +376,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
     {
         int id = menuItem.getItemId();
-        Toast.makeText(this, ""+id, Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, ""+id, Toast.LENGTH_SHORT).show();
         if (id == R.id.nav_gallery) {
             Paper.book().destroy();
             Paper.book().write(PaperStore.UserLoginID, "0000000000");
@@ -384,10 +384,9 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
             finish();
             startActivity(intent);
 
-        } else if (id == R.id.nav_home) {
-            Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-
-
+        } else if (id == R.id.action_cart) {
+            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+            startActivity(intent);
         }
         else if(id==R.id.action_wishlist)
         {

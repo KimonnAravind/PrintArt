@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
     private EditText PhoneNumber,name,password,passwords;
     private String OTP="Invalid", Combo;
     private FirebaseAuth mAuth;
-    private Button createAcc,temps;
+    private Button createAcc;
     DatabaseReference UserPortal;
     HashMap<String,Object> EndUsers = new HashMap<>();
     String code;
@@ -89,13 +89,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-        temps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
-            }
-        });
 
         {
 

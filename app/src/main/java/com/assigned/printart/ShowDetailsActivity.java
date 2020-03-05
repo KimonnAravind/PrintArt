@@ -42,6 +42,8 @@ import com.assigned.printart.Viewer.NestedCategoryViewHolder;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,7 +66,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     ProductAdapter aptr;
     ProductFirebaseViewer productFirebaseViewer;
 
-    DatabaseReference Productbanner;
+    DatabaseReference Productbanner, wishListReference;
     private List<ProductBanners> productBannersList = new ArrayList<>();
     private Timer timer;
     private int currentposition = 0;
@@ -73,6 +75,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     private RadioGroup radioGroup;
     private TextView Pname, PDes, POprice, PSprice, Sellers;
     RecyclerView recyclerView;
+    String strs;
     RecyclerView.LayoutManager manager;
 
     int x = 10, y, z;
@@ -84,6 +87,9 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         DisplayID = getIntent().getStringExtra("Display");
         CategoryID = getIntent().getStringExtra("Category");
         t1 = (TextView) findViewById(R.id.type1);
+        strs = Paper.book().read(PaperStore.UserLoginID);
+        wishListReference = FirebaseDatabase.getInstance().getReference().child("UserCart").child(strs);
+        Toast.makeText(this, "" + DisplayID, Toast.LENGTH_SHORT).show();
         radioGroup = (RadioGroup) findViewById(R.id.radios);
         t2 = (TextView) findViewById(R.id.type2);
         t3 = (TextView) findViewById(R.id.type3);
@@ -166,8 +172,6 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     @Override
     protected void onStart() {
         super.onStart();
-
-
         FirebaseRecyclerOptions<DisplayProducts> options =
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(ProductDetailsRef.child(CategoryID), DisplayProducts.class)
                         .build();
@@ -175,7 +179,6 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             @Override
             protected void onBindViewHolder(@NonNull Bottom holder, int position, @NonNull DisplayProducts model) {
                 Picasso.get().load(model.getPro()).into(holder.pics);
-
             }
 
             @NonNull
@@ -183,13 +186,11 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             public Bottom onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom, parent, false);
                 Bottom holder = new Bottom(view);
-
                 return holder;
             }
         };
         recyclerView.setAdapter(optionis);
         optionis.startListening();
-
     }
 
     @Override
@@ -200,7 +201,6 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
 
     @Override
     public void Loadfailed(String string) {
-
     }
 
     private void loadimages() {
@@ -259,14 +259,43 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         int id = menuItem.getItemId();
 
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "one", Toast.LENGTH_SHORT).show();
+
+            if (!strs.equals("0000000000")) {
+
+                addtocart(ProductDetailsRef.child(CategoryID).child(DisplayID), wishListReference.child(DisplayID));
+            } else {
+                Toast.makeText(ShowDetailsActivity.this, "Cannot Add", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ShowDetailsActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
 
         } else if (id == R.id.action_settingsa) {
-            Toast.makeText(this, "Two", Toast.LENGTH_SHORT).show();
 
 
         }
         return true;
+    }
+
+    private void addtocart(DatabaseReference child, final DatabaseReference child1) {
+        Toast.makeText(this, "Here", Toast.LENGTH_SHORT).show();
+
+        child.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                child1.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(ShowDetailsActivity.this, "Added to wishlist!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override

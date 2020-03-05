@@ -161,7 +161,8 @@ public class DisplayProductActivity extends AppCompatActivity
 
         displayReference.addListenerForSingleValueEvent(new ValueEventListener()  {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 wishListReference.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
