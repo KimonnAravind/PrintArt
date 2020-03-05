@@ -19,7 +19,7 @@ public class WishListViewHolder extends RecyclerView.ViewHolder
     public WishListViewHolder(@NonNull View itemView) {
         super(itemView);
         imgv=itemView.findViewById(R.id.images);
-        temps=itemView.findViewById(R.id.temp);
+
         locl_buttons=itemView.findViewById(R.id.locl_button);
         Pname=itemView.findViewById(R.id.name);
         POPrice=itemView.findViewById(R.id.productorigialPrice);

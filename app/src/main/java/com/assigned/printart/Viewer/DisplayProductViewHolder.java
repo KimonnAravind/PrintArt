@@ -13,14 +13,14 @@ package com.assigned.printart.Viewer;
 
 public class DisplayProductViewHolder extends RecyclerView.ViewHolder
 {
-    public static ImageView imgv,temps;
+    public static ImageView imgv;
     public static FloatingActionButton locl_buttons;
     public static TextView Pname,POPrice,PSPrice,Pdes,Seller,number;
 
     public DisplayProductViewHolder(@NonNull View itemView) {
         super(itemView);
         imgv=itemView.findViewById(R.id.images);
-        temps=itemView.findViewById(R.id.temp);
+
         locl_buttons=itemView.findViewById(R.id.locl_button);
         Pname=itemView.findViewById(R.id.name);
         POPrice=itemView.findViewById(R.id.productorigialPrice);

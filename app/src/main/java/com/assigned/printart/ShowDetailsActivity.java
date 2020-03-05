@@ -3,6 +3,7 @@ package com.assigned.printart;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -13,6 +14,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,6 +34,7 @@ import com.assigned.printart.Model.DisplayCategory;
 import com.assigned.printart.Model.DisplayProducts;
 import com.assigned.printart.Model.NestedCategory;
 import com.assigned.printart.Model.ProductBanners;
+import com.assigned.printart.Paper.PaperStore;
 import com.assigned.printart.Transform.Transformer;
 import com.assigned.printart.Viewer.Bottom;
 import com.assigned.printart.Viewer.CategoryViewHolder;
@@ -37,6 +42,7 @@ import com.assigned.printart.Viewer.NestedCategoryViewHolder;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +55,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer {
+import io.paperdb.Paper;
+
+public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer, BottomNavigationView.OnNavigationItemSelectedListener {
     String DisplayID,CategoryID;
     ViewPager products;
     RadioButton withf,withoutf;
@@ -83,11 +91,16 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
       t5=(TextView)findViewById(R.id.type5);
       t6=(TextView)findViewById(R.id.type6);
 
+        Toolbar toolbar = findViewById(R.id.tbar);
+        toolbar.setTitle("Home");
+        setSupportActionBar(toolbar);
+
         productFirebaseViewer=this;
         manager=new LinearLayoutManager(this);
 
         Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
-
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigationes);
+        navigation.setOnNavigationItemSelectedListener(this);
 
         ProductDetailsRef=FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
 
@@ -101,6 +114,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         Sellers=(TextView)findViewById(R.id.sell);
         withf=(RadioButton)findViewById(R.id.withF);
         withoutf=(RadioButton)findViewById(R.id.withoutF);
+
+
 
         if(CategoryID.equals("01"))
         {
@@ -144,11 +159,19 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
 
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.other, menu);
+        return true;
+    }
 
     @Override
     protected void onStart()
     {
         super.onStart();
+
 
 
         FirebaseRecyclerOptions<DisplayProducts> options=
@@ -245,4 +268,33 @@ switch (view.getId())
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
+    {
+        int id = menuItem.getItemId();
+
+        if (id == R.id.action_settings) {
+            Toast.makeText(this, "one", Toast.LENGTH_SHORT).show();
+
+        } else if (id == R.id.action_settingsa) {
+            Toast.makeText(this, "Two", Toast.LENGTH_SHORT).show();
+
+
+        }
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_Logouts:
+                Toast.makeText(this, "T", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.actions:
+                Toast.makeText(this, "Tt", Toast.LENGTH_SHORT).show();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

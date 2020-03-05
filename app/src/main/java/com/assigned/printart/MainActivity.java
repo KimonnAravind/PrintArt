@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
 
 
-        temps=(Button)findViewById(R.id.temp);
+
         temps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

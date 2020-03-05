@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_Logouts"
+        android:icon="@drawable/chat"
+        android:iconTint="@android:color/white"
+        app:showAsAction="ifRoom"
+        android:title="Add" />
+
+    <item
+        android:id="@+id/actions"
+        android:orderInCategory="100"
+        android:icon="@drawable/thoppi"
+        android:title="@string/logout"
+        app:showAsAction="never" />
+
+</menu>

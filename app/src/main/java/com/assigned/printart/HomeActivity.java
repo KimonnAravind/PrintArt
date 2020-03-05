@@ -196,7 +196,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
                             }
                         });
                     }
-
                     @NonNull
                     @Override
                     public NestedCategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -359,7 +358,6 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
             }
         }, 250, 2500);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
