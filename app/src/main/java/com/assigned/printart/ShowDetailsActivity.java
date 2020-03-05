@@ -58,98 +58,94 @@ import java.util.TimerTask;
 import io.paperdb.Paper;
 
 public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer, BottomNavigationView.OnNavigationItemSelectedListener {
-    String DisplayID,CategoryID;
+    String DisplayID, CategoryID;
     ViewPager products;
-    RadioButton withf,withoutf;
+    RadioButton withf, withoutf;
     ProductAdapter aptr;
     ProductFirebaseViewer productFirebaseViewer;
 
     DatabaseReference Productbanner;
-    private List<ProductBanners> productBannersList= new ArrayList<>();
+    private List<ProductBanners> productBannersList = new ArrayList<>();
     private Timer timer;
-    private int currentposition=0;
+    private int currentposition = 0;
     private DatabaseReference ProductDetailsRef;
-    TextView t1,t2,t3,t4,t5,t6;
+    TextView t1, t2, t3, t4, t5, t6;
     private RadioGroup radioGroup;
-    private TextView Pname,PDes,POprice,PSprice,Sellers;
+    private TextView Pname, PDes, POprice, PSprice, Sellers;
     RecyclerView recyclerView;
     RecyclerView.LayoutManager manager;
 
-    int x=10,y,z;
+    int x = 10, y, z;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
-      DisplayID=getIntent().getStringExtra("Display");
-      CategoryID=getIntent().getStringExtra("Category");
-      t1=(TextView)findViewById(R.id.type1);
-      radioGroup=(RadioGroup)findViewById(R.id.radios);
-      t2=(TextView)findViewById(R.id.type2);
-      t3=(TextView)findViewById(R.id.type3);
-      t4=(TextView)findViewById(R.id.type4);
-      t5=(TextView)findViewById(R.id.type5);
-      t6=(TextView)findViewById(R.id.type6);
+        DisplayID = getIntent().getStringExtra("Display");
+        CategoryID = getIntent().getStringExtra("Category");
+        t1 = (TextView) findViewById(R.id.type1);
+        radioGroup = (RadioGroup) findViewById(R.id.radios);
+        t2 = (TextView) findViewById(R.id.type2);
+        t3 = (TextView) findViewById(R.id.type3);
+        t4 = (TextView) findViewById(R.id.type4);
+        t5 = (TextView) findViewById(R.id.type5);
+        t6 = (TextView) findViewById(R.id.type6);
         Toolbar toolbar = findViewById(R.id.tbar);
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
 
-        productFirebaseViewer=this;
-        manager=new LinearLayoutManager(this);
+        productFirebaseViewer = this;
+        manager = new LinearLayoutManager(this);
 
-        Productbanner=FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
+        Productbanner = FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
         BottomNavigationView navigation = findViewById(R.id.bottom_navigationes);
         navigation.setOnNavigationItemSelectedListener(this);
 
-        ProductDetailsRef=FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
+        ProductDetailsRef = FirebaseDatabase.getInstance().getReference().child("ShowingProducts");
 
-        products=(ViewPager)findViewById(R.id.productviewerpage);
+        products = (ViewPager) findViewById(R.id.productviewerpage);
         loadimages();
-        products.setPageTransformer(true,new Transformer());
-        Pname=(TextView)findViewById(R.id.ProductName);
-        PDes=(TextView)findViewById(R.id.ProductDescription);
-        POprice=(TextView)findViewById(R.id.originalPrice);
-        PSprice=(TextView)findViewById(R.id.sellingprice);
-        Sellers=(TextView)findViewById(R.id.sell);
-        withf=(RadioButton)findViewById(R.id.withF);
-        withoutf=(RadioButton)findViewById(R.id.withoutF);
+        products.setPageTransformer(true, new Transformer());
+        Pname = (TextView) findViewById(R.id.ProductName);
+        PDes = (TextView) findViewById(R.id.ProductDescription);
+        POprice = (TextView) findViewById(R.id.originalPrice);
+        PSprice = (TextView) findViewById(R.id.sellingprice);
+        Sellers = (TextView) findViewById(R.id.sell);
+        withf = (RadioButton) findViewById(R.id.withF);
+        withoutf = (RadioButton) findViewById(R.id.withoutF);
 
 
-
-        if(CategoryID.equals("01"))
-        {
+        if (CategoryID.equals("01")) {
             radioGroup.setVisibility(View.VISIBLE);
         }
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerViewin);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewin);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        Productbanner .child(CategoryID).child(DisplayID).addValueEventListener(new ValueEventListener() {
+        Productbanner.child(CategoryID).child(DisplayID).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-            {
-            if(dataSnapshot.exists()) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
 
 
-
-            Pname.setText(dataSnapshot.child("Pame").getValue().toString());
-            PDes.setText(dataSnapshot.child("Pdes").getValue().toString());
-                POprice.setText("₹"+dataSnapshot.child("PpriceO").getValue().toString());
-                y=Integer.parseInt(dataSnapshot.child("Psp").getValue().toString());
-                z=Integer.parseInt(dataSnapshot.child("PpriceO").getValue().toString());
-                POprice.setPaintFlags(POprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                PSprice.setText("₹"+dataSnapshot.child("Psp").getValue().toString());
-                Sellers.setText(dataSnapshot.child("Seller").getValue().toString());
-                t1.setText(dataSnapshot.child("type").getValue().toString());
-                t2.setText(dataSnapshot.child("type1").getValue().toString());
-                t3.setText(dataSnapshot.child("type2").getValue().toString());
-                t4.setText(dataSnapshot.child("type3").getValue().toString());
-                t5.setText(dataSnapshot.child("type4").getValue().toString());
-                t6.setText(dataSnapshot.child("type5").getValue().toString());
-
+                    Pname.setText(dataSnapshot.child("Pame").getValue().toString());
+                    PDes.setText(dataSnapshot.child("Pdes").getValue().toString());
+                    POprice.setText("₹" + dataSnapshot.child("PpriceO").getValue().toString());
+                    y = Integer.parseInt(dataSnapshot.child("Psp").getValue().toString());
+                    z = Integer.parseInt(dataSnapshot.child("PpriceO").getValue().toString());
+                    POprice.setPaintFlags(POprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    PSprice.setText("₹" + dataSnapshot.child("Psp").getValue().toString());
+                    Sellers.setText(dataSnapshot.child("Seller").getValue().toString());
+                    t1.setText(dataSnapshot.child("type").getValue().toString());
+                    t2.setText(dataSnapshot.child("type1").getValue().toString());
+                    t3.setText(dataSnapshot.child("type2").getValue().toString());
+                    t4.setText(dataSnapshot.child("type3").getValue().toString());
+                    t5.setText(dataSnapshot.child("type4").getValue().toString());
+                    t6.setText(dataSnapshot.child("type5").getValue().toString());
 
 
+                }
             }
-            }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -158,6 +154,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
 
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -167,16 +164,14 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     }
 
     @Override
-    protected void onStart()
-    {
+    protected void onStart() {
         super.onStart();
 
 
-
-        FirebaseRecyclerOptions<DisplayProducts> options=
+        FirebaseRecyclerOptions<DisplayProducts> options =
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(ProductDetailsRef.child(CategoryID), DisplayProducts.class)
                         .build();
-        FirebaseRecyclerAdapter<DisplayProducts, Bottom> optionis=new FirebaseRecyclerAdapter<DisplayProducts, Bottom>(options) {
+        FirebaseRecyclerAdapter<DisplayProducts, Bottom> optionis = new FirebaseRecyclerAdapter<DisplayProducts, Bottom>(options) {
             @Override
             protected void onBindViewHolder(@NonNull Bottom holder, int position, @NonNull DisplayProducts model) {
                 Picasso.get().load(model.getPro()).into(holder.pics);
@@ -186,8 +181,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             @NonNull
             @Override
             public Bottom onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom,parent,false);
-               Bottom holder= new Bottom(view);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bottom, parent, false);
+                Bottom holder = new Bottom(view);
 
                 return holder;
             }
@@ -198,26 +193,26 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     }
 
     @Override
-    public void Loadsuccess(List<ProductBanners> productBannersList)
-    {
-    aptr=new ProductAdapter(this,productBannersList);
-    products.setAdapter(aptr);
+    public void Loadsuccess(List<ProductBanners> productBannersList) {
+        aptr = new ProductAdapter(this, productBannersList);
+        products.setAdapter(aptr);
     }
+
     @Override
-    public void Loadfailed(String string)
-    {
+    public void Loadfailed(String string) {
 
     }
-    private void loadimages()
-    {
+
+    private void loadimages() {
         Productbanner.child(CategoryID).child(DisplayID).child("images").addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot productbannersnapshot:dataSnapshot.getChildren())
+                for (DataSnapshot productbannersnapshot : dataSnapshot.getChildren())
                     productBannersList.add(productbannersnapshot.getValue(ProductBanners.class));
                 productFirebaseViewer.Loadsuccess(productBannersList);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 productFirebaseViewer.Loadfailed(databaseError.getMessage());
@@ -225,39 +220,31 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         });
     }
 
-    public void OnRadioChecked(View view)
-    {
-boolean isSelected = ((AppCompatRadioButton)view).isChecked();
-switch (view.getId())
-{
-    case R.id.withF:
-    {
-        withFrame();
-        break;
-    }
-    case R.id.withoutF:
-    {
-        WithoutFrame();
-        break;
+    public void OnRadioChecked(View view) {
+        boolean isSelected = ((AppCompatRadioButton) view).isChecked();
+        switch (view.getId()) {
+            case R.id.withF: {
+                withFrame();
+                break;
+            }
+            case R.id.withoutF: {
+                WithoutFrame();
+                break;
 
-    }
-}
+            }
+        }
     }
 
-    private void WithoutFrame()
-    {
-    if(x>300)
-    {
-        PSprice.setText("₹" + String.valueOf(y));
-        POprice.setText("₹" + String.valueOf(z));
-        x=10;
-    }
+    private void WithoutFrame() {
+        if (x > 300) {
+            PSprice.setText("₹" + String.valueOf(y));
+            POprice.setText("₹" + String.valueOf(z));
+            x = 10;
+        }
     }
 
-    private void withFrame()
-    {
-        if(x<300)
-        {
+    private void withFrame() {
+        if (x < 300) {
             x = 300;
             x = x + Integer.parseInt(PSprice.getText().toString().substring(1));
             //Toast.makeText(this, ""+x, Toast.LENGTH_SHORT).show();
@@ -268,8 +255,7 @@ switch (view.getId())
 
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
-    {
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
 
         if (id == R.id.action_settings) {
@@ -282,6 +268,7 @@ switch (view.getId())
         }
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
