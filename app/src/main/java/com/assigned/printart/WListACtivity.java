@@ -66,8 +66,8 @@ public class WListACtivity extends AppCompatActivity
             @NonNull
             @Override
             public DisplayProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wlistdesign,parent,false);
-                DisplayProductViewHolder holder= new DisplayProductViewHolder(view);
+                View views = LayoutInflater.from(parent.getContext()).inflate(R.layout.wlistdesign,parent,false);
+                DisplayProductViewHolder holder= new DisplayProductViewHolder(views);
 
                 return holder;
             }

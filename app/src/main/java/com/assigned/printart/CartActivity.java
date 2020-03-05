@@ -23,7 +23,6 @@ public class CartActivity extends AppCompatActivity
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     DatabaseReference databaseReference;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,46 +33,32 @@ public class CartActivity extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
         databaseReference= FirebaseDatabase.getInstance().getReference().child("UserCart")
                 .child("7904168617");
-
-
-
         FirebaseRecyclerOptions<DisplayProducts> options=
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(databaseReference, DisplayProducts.class)
                         .build();
-
-
-        FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder> adapter =new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options) {
+        FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder> adapter =new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options)
+        {
             @Override
             protected void onBindViewHolder(@NonNull DisplayProductViewHolder holder, int position, @NonNull DisplayProducts model) {
-
-
-
                 Picasso.get().load(model.getPro()).into(holder.imgv);
             }
             @Override
             public long getItemId(int position) {
                 return position;
             }
-
             @Override
             public int getItemViewType(int position) {
                 return position;
             }
-
-
             @NonNull
             @Override
             public DisplayProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.wlistdesign,parent,false);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cartlistdesign,parent,false);
                 DisplayProductViewHolder holder= new DisplayProductViewHolder(view);
-
                 return holder;
             }
         };
-
-
         recyclerView.setAdapter(adapter);
         adapter.startListening();
-
     }
 }
