@@ -66,9 +66,9 @@ public class CartActivity extends AppCompatActivity {
                 Picasso.get().load(model.getPro()).into(holder.imgvs);
                 holder.d.setText(model.getPdes());
                 holder.t.setText(model.getPame());
-                holder.o.setText(model.getPpriceO());
+                holder.o.setText("₹"+model.getPpriceO()+" ");
                 holder.o.setPaintFlags(holder.o.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                holder.s.setText(model.getPsp());
+                holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
             }
 

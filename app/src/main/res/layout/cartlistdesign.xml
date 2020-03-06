@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:text="Description"
             android:id="@+id/desc"
+            android:textColor="@android:color/black"
             android:layout_margin="15dp"
             android:layout_toLeftOf="@id/images"
             />
@@ -34,9 +35,8 @@
             android:layout_height="wrap_content"
             android:text="Title"
             android:id="@+id/nme"
-            android:layout_marginTop="5dp"
             android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@id/images"
+            android:layout_marginLeft="15dp"
             android:layout_below="@id/desc"
             />
 
@@ -44,10 +44,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SellingPrice"
+            android:layout_marginLeft="15dp"
             android:id="@+id/SellingPrices"
             android:layout_marginRight="15dp"
+            android:textSize="25dp"
+            android:textStyle="bold|italic"
+            android:textColor="@android:color/black"
+
             android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@id/OPrices"
             android:layout_below="@id/nme"
             />
 
@@ -56,9 +60,12 @@
             android:layout_height="wrap_content"
             android:text="OriginalPrice"
             android:id="@+id/OPrices"
+            android:layout_above="@id/SellerName"
+            android:layout_toRightOf="@id/SellingPrices"
             android:layout_marginRight="15dp"
+            android:gravity="end|bottom"
             android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@id/images"
+            android:layout_marginLeft="5dp"
             android:layout_below="@id/nme"
             />
         <TextView
@@ -66,10 +73,9 @@
             android:layout_height="wrap_content"
             android:text="SellerName"
             android:id="@+id/SellerName"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_toLeftOf="@id/images"
-            android:layout_below="@id/OPrices"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/SellingPrices"
             />
     </RelativeLayout>
 
