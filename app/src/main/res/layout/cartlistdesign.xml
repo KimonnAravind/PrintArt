@@ -21,6 +21,56 @@
             android:layout_marginTop="0dp"
             android:background="@android:color/white"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:id="@+id/desc"
+            android:layout_margin="15dp"
+            android:layout_toLeftOf="@id/images"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:id="@+id/nme"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/images"
+            android:layout_below="@id/desc"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SellingPrice"
+            android:id="@+id/SellingPrices"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@id/OPrices"
+            android:layout_below="@id/nme"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OriginalPrice"
+            android:id="@+id/OPrices"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@id/images"
+            android:layout_below="@id/nme"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SellerName"
+            android:id="@+id/SellerName"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_toLeftOf="@id/images"
+            android:layout_below="@id/OPrices"
+            />
     </RelativeLayout>
 
 

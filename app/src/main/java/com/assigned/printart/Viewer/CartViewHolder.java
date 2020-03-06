@@ -12,9 +12,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class CartViewHolder extends RecyclerView.ViewHolder
 {
-    public static ImageView imgv;
+    public static ImageView imgvs;
+    public static TextView d,t,o,s,sn;
     public CartViewHolder(@NonNull View itemView) {
         super(itemView);
-        imgv=itemView.findViewById(R.id.images);
+        imgvs=itemView.findViewById(R.id.images);
+        d=itemView.findViewById(R.id.desc);
+        t=itemView.findViewById(R.id.nme);
+        o=itemView.findViewById(R.id.OPrices);
+        s=itemView.findViewById(R.id.SellingPrices);
+        sn=itemView.findViewById(R.id.SellerName);
     }
 }
