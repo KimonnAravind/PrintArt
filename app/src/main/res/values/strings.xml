@@ -23,4 +23,14 @@
     <string name="phone_number">Phone number</string>
     <string name="get_otp">Get OTP</string>
     <string name="weare">WE ARE POSTER MAKERS</string>
+
+    <string-array name="numis">
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+        <item>"5"</item>
+        <item>"6"</item>
+    </string-array>
+
 </resources>

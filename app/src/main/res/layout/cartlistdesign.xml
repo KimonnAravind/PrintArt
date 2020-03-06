@@ -78,12 +78,14 @@
             android:layout_marginTop="10dp"
             android:text="SellerName" />
 
-        <androidx.appcompat.widget.AppCompatSpinner
+    <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/spining"
             android:layout_below="@id/SellingPrices"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:entries="@array/numis"
             android:layout_toRightOf="@id/SellerName"
             android:orientation="horizontal"/>
 

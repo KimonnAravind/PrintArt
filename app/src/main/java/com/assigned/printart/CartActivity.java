@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,7 +34,8 @@ import java.util.HashMap;
 
 import io.paperdb.Paper;
 
-public class CartActivity extends AppCompatActivity {
+    public class CartActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
+{
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     private TextView deliveryAdd;
@@ -54,6 +56,7 @@ public class CartActivity extends AppCompatActivity {
         updateadd = (Button) findViewById(R.id.addorub);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
         String users = Paper.book().read(PaperStore.UserLoginID);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserCart")
                 .child(users);
@@ -74,6 +77,8 @@ public class CartActivity extends AppCompatActivity {
                 holder.o.setPaintFlags(holder.o.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
+
+                Toast.makeText(CartActivity.this, ""+holder.spin.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -181,5 +186,36 @@ public class CartActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * <p>Callback method to be invoked when an item in this view has been
+     * selected. This callback is invoked only when the newly selected
+     * position is different from the previously selected position or if
+     * there was no selected item.</p>
+     * <p>
+     * Implementers can call getItemAtPosition(position) if they need to access the
+     * data associated with the selected item.
+     *
+     * @param parent   The AdapterView where the selection happened
+     * @param view     The view within the AdapterView that was clicked
+     * @param position The position of the view in the adapter
+     * @param id       The row id of the item that is selected
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, ""+parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Callback method to be invoked when the selection disappears from this
+     * view. The selection can disappear for instance when touch is activated
+     * or when the adapter becomes empty.
+     *
+     * @param parent The AdapterView that now contains no selected item.
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
