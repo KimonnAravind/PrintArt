@@ -1,82 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="2dp"
     app:cardCornerRadius="10dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <ImageView
             android:id="@+id/images"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
+            android:layout_margin="10dp"
             android:layout_marginTop="0dp"
             android:background="@android:color/white"
-            />
+            android:src="@android:color/darker_gray" />
+
         <TextView
+            android:id="@+id/desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Description"
-            android:id="@+id/desc"
-            android:textColor="@android:color/black"
             android:layout_margin="15dp"
             android:layout_toLeftOf="@id/images"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title"
-            android:id="@+id/nme"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_below="@id/desc"
-            />
+            android:text="Description"
+            android:textColor="@android:color/black" />
 
         <TextView
+            android:id="@+id/nme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SellingPrice"
+            android:layout_below="@id/desc"
             android:layout_marginLeft="15dp"
-            android:id="@+id/SellingPrices"
             android:layout_marginRight="15dp"
-            android:textSize="25dp"
-            android:textStyle="bold|italic"
+            android:text="Title" />
+
+        <TextView
+            android:id="@+id/SellingPrices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nme"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:text="SellingPrice"
             android:textColor="@android:color/black"
 
-            android:layout_marginTop="5dp"
-            android:layout_below="@id/nme"
-            />
+            android:textSize="25dp"
+            android:textStyle="bold|italic" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="OriginalPrice"
             android:id="@+id/OPrices"
-            android:layout_above="@id/SellerName"
-            android:layout_toRightOf="@id/SellingPrices"
-            android:layout_marginRight="15dp"
-            android:gravity="end|bottom"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@id/nme"
-            />
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SellerName"
+            android:layout_above="@id/SellerName"
+            android:layout_below="@id/nme"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/SellingPrices"
+            android:gravity="end|bottom"
+            android:text="OriginalPrice" />
+
+        <TextView
             android:id="@+id/SellerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/SellingPrices"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
+            android:text="SellerName" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@id/SellingPrices"
-            />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/SellerName"
+            android:orientation="horizontal"/>
+
+
+
     </RelativeLayout>
 
 

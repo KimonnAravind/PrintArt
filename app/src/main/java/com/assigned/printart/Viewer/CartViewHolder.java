@@ -1,6 +1,7 @@
 package com.assigned.printart.Viewer;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,8 @@ public class CartViewHolder extends RecyclerView.ViewHolder
 {
     public static ImageView imgvs;
     public static TextView d,t,o,s,sn;
+    public static ImageView Plus,Minus;
+    public static EditText Count;
     public CartViewHolder(@NonNull View itemView) {
         super(itemView);
         imgvs=itemView.findViewById(R.id.images);
@@ -22,5 +25,6 @@ public class CartViewHolder extends RecyclerView.ViewHolder
         o=itemView.findViewById(R.id.OPrices);
         s=itemView.findViewById(R.id.SellingPrices);
         sn=itemView.findViewById(R.id.SellerName);
+
     }
 }

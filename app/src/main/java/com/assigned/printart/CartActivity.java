@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,10 @@ public class CartActivity extends AppCompatActivity {
                         .build();
         FirebaseRecyclerAdapter<DisplayProducts, CartViewHolder> adapter = new FirebaseRecyclerAdapter<DisplayProducts, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull DisplayProducts model) {
+            protected void onBindViewHolder(@NonNull final CartViewHolder holder, final int position, @NonNull DisplayProducts model)
+            {
+
+
                 Picasso.get().load(model.getPro()).into(holder.imgvs);
                 holder.d.setText(model.getPdes());
                 holder.t.setText(model.getPame());
@@ -70,15 +74,23 @@ public class CartActivity extends AppCompatActivity {
                 holder.o.setPaintFlags(holder.o.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
+
+
+
+
             }
+
 
             @Override
             public long getItemId(int position) {
+                Log.e("one",""+position);
+
                 return position;
             }
 
             @Override
             public int getItemViewType(int position) {
+                Log.e("one+",""+position);
                 return position;
             }
 
@@ -89,6 +101,7 @@ public class CartActivity extends AppCompatActivity {
                 CartViewHolder holder = new CartViewHolder(view);
                 return holder;
             }
+
         };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
