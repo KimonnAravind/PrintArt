@@ -7,10 +7,13 @@
     android:layout_margin="2dp"
     app:cardCornerRadius="10dp">
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <ImageView
             android:id="@+id/images"
@@ -56,6 +59,12 @@
             android:textSize="25dp"
             android:textStyle="bold|italic" />
 
+        <ImageView
+            android:id="@+id/players"
+            android:layout_width="156dp"
+            android:layout_height="124dp"
+            android:background="@color/flp" />
+
         <TextView
             android:id="@+id/OPrices"
             android:layout_width="wrap_content"
@@ -78,16 +87,8 @@
             android:layout_marginTop="10dp"
             android:text="SellerName" />
 
-    <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spining"
-            android:layout_below="@id/SellingPrices"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:entries="@array/numis"
-            android:layout_toRightOf="@id/SellerName"
-            android:orientation="horizontal"/>
+
+
 
 
 

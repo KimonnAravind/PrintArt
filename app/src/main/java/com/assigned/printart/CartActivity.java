@@ -78,7 +78,6 @@ import io.paperdb.Paper;
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
 
-                Toast.makeText(CartActivity.this, ""+holder.spin.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
 
 
 
