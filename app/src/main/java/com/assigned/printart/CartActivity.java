@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,47 +29,55 @@ import com.squareup.picasso.Picasso;
 
 import io.paperdb.Paper;
 
-public class CartActivity extends AppCompatActivity
-{
+public class CartActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     private TextView deliveryAdd;
-    DatabaseReference databaseReference,AddressReference;
+    Button changeAdd, updateadd;
+    private EditText deliveryless,pinc;
+    DatabaseReference databaseReference, AddressReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        deliveryAdd=(TextView)findViewById(R.id.deliveryA);
+        deliveryAdd = (TextView) findViewById(R.id.deliveryA);
+        deliveryless = (EditText) findViewById(R.id.deliveryB);
+        pinc=(EditText)findViewById(R.id.deliveryPin);
+        changeAdd = (Button) findViewById(R.id.changeAdds);
+        updateadd = (Button) findViewById(R.id.addorub);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        String users= Paper.book().read(PaperStore.UserLoginID);
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("UserCart")
+        String users = Paper.book().read(PaperStore.UserLoginID);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("UserCart")
                 .child(users);
-        AddressReference= FirebaseDatabase.getInstance().getReference().child("EndUsers").child(users);
-        FirebaseRecyclerOptions<DisplayProducts> options=
+        AddressReference = FirebaseDatabase.getInstance().getReference().child("EndUsers").child(users);
+        FirebaseRecyclerOptions<DisplayProducts> options =
                 new FirebaseRecyclerOptions.Builder<DisplayProducts>().setQuery(databaseReference, DisplayProducts.class)
                         .build();
-        FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder> adapter =new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options)
-        {
+        FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder> adapter = new FirebaseRecyclerAdapter<DisplayProducts, DisplayProductViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull DisplayProductViewHolder holder, int position, @NonNull DisplayProducts model) {
                 Picasso.get().load(model.getPro()).into(holder.imgv);
             }
+
             @Override
             public long getItemId(int position) {
                 return position;
             }
+
             @Override
             public int getItemViewType(int position) {
                 return position;
             }
+
             @NonNull
             @Override
             public DisplayProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cartlistdesign,parent,false);
-                DisplayProductViewHolder holder= new DisplayProductViewHolder(view);
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cartlistdesign, parent, false);
+                DisplayProductViewHolder holder = new DisplayProductViewHolder(view);
                 return holder;
             }
         };
@@ -81,14 +91,27 @@ public class CartActivity extends AppCompatActivity
         AddressReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child("Address").exists())
-                {
+                if (dataSnapshot.child("Address").exists()) {
 
-
-                deliveryAdd.setText("Deliver to: "+dataSnapshot.child("Address").getValue().toString());
-                }
-                else
-                {
+                    deliveryAdd.setVisibility(View.VISIBLE);
+                    changeAdd.setVisibility(View.VISIBLE);
+                    deliveryAdd.setText("Deliver to: "+""+dataSnapshot.child("Name").getValue().toString()+" "
+                            + dataSnapshot.child("Address").getValue().toString()
+                            +"-"+dataSnapshot.child("Pincode").getValue().toString());
+                    changeAdd.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deliveryless.setVisibility(View.VISIBLE);
+                            updateadd.setVisibility(View.VISIBLE);
+                            deliveryAdd.setVisibility(View.INVISIBLE);
+                            pinc.setVisibility(View.VISIBLE);
+                            changeAdd.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                } else {
+                    deliveryless.setVisibility(View.VISIBLE);
+                    updateadd.setVisibility(View.VISIBLE);
+                    pinc.setVisibility(View.VISIBLE);
 
                 }
             }
