@@ -1,6 +1,7 @@
 package com.assigned.printart;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ public class CartActivity extends AppCompatActivity
         setContentView(R.layout.activity_cart);
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
+
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         databaseReference= FirebaseDatabase.getInstance().getReference().child("UserCart")

@@ -10,14 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.assigned.printart.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class CartViewHolder extends RecyclerView.ViewHolder {
+public class CartViewHolder extends RecyclerView.ViewHolder
+{
     public static ImageView imgv;
-    public static FloatingActionButton locl_buttons;
-    public static TextView Pname,POPrice,PSPrice,Pdes,Seller,number;
-
     public CartViewHolder(@NonNull View itemView) {
         super(itemView);
         imgv=itemView.findViewById(R.id.images);
-
     }
 }
