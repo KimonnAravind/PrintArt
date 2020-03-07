@@ -77,7 +77,6 @@ import io.paperdb.Paper;
                 holder.o.setPaintFlags(holder.o.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
-
             }
 
 

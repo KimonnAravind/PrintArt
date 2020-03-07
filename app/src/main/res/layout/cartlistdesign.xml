@@ -80,6 +80,15 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:text="SellerName" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity"
+            android:layout_toRightOf="@id/SellerName"
+            android:layout_below="@id/SellingPrices"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            />
 
 
 
