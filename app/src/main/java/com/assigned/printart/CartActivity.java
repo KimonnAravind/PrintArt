@@ -78,10 +78,6 @@ import io.paperdb.Paper;
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
 
-
-
-
-
             }
 
 

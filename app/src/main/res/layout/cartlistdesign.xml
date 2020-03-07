@@ -59,12 +59,6 @@
             android:textSize="25dp"
             android:textStyle="bold|italic" />
 
-        <ImageView
-            android:id="@+id/players"
-            android:layout_width="156dp"
-            android:layout_height="124dp"
-            android:background="@color/flp" />
-
         <TextView
             android:id="@+id/OPrices"
             android:layout_width="wrap_content"

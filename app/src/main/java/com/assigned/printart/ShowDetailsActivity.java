@@ -19,9 +19,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,17 +55,20 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import io.paperdb.Paper;
 
-public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer, BottomNavigationView.OnNavigationItemSelectedListener {
+public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer, BottomNavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener
+{
     String DisplayID, CategoryID;
     ViewPager products;
     RadioButton withf, withoutf;
     ProductAdapter aptr;
+    String qty="1";
     ProductFirebaseViewer productFirebaseViewer;
 
     DatabaseReference Productbanner, wishListReference;
@@ -76,8 +81,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     private TextView Pname, PDes, POprice, PSprice, Sellers;
     RecyclerView recyclerView;
     String strs;
+    Spinner spin;
     RecyclerView.LayoutManager manager;
-
     int x = 10, y, z;
 
     @Override
@@ -94,6 +99,10 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         t2 = (TextView) findViewById(R.id.type2);
         t3 = (TextView) findViewById(R.id.type3);
         t4 = (TextView) findViewById(R.id.type4);
+        spin=(Spinner)findViewById(R.id.spinningID);
+        spin.setOnItemSelectedListener(this);
+
+        spin.setPrompt("QTY");
         t5 = (TextView) findViewById(R.id.type5);
         t6 = (TextView) findViewById(R.id.type6);
         Toolbar toolbar = findViewById(R.id.tbar);
@@ -276,7 +285,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         return true;
     }
 
-    private void addtocart(DatabaseReference child, final DatabaseReference child1) {
+    private void addtocart(final DatabaseReference child, final DatabaseReference child1) {
         Toast.makeText(this, "Here", Toast.LENGTH_SHORT).show();
 
         child.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -284,7 +293,11 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 child1.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    public void onComplete(@NonNull Task<Void> task)
+                    {
+                        HashMap<String,Object> Qtys= new HashMap<>();
+                        Qtys.put("quantity",qty);
+                        child1.updateChildren(Qtys);
                         Toast.makeText(ShowDetailsActivity.this, "Added to wishlist!", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -311,5 +324,38 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * <p>Callback method to be invoked when an item in this view has been
+     * selected. This callback is invoked only when the newly selected
+     * position is different from the previously selected position or if
+     * there was no selected item.</p>
+     * <p>
+     * Implementers can call getItemAtPosition(position) if they need to access the
+     * data associated with the selected item.
+     *
+     * @param parent   The AdapterView where the selection happened
+     * @param view     The view within the AdapterView that was clicked
+     * @param position The position of the view in the adapter
+     * @param id       The row id of the item that is selected
+     */
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+    {
+    qty=parent.getSelectedItem().toString();
+        Toast.makeText(this, "QTY"+qty, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Callback method to be invoked when the selection disappears from this
+     * view. The selection can disappear for instance when touch is activated
+     * or when the adapter becomes empty.
+     *
+     * @param parent The AdapterView that now contains no selected item.
+     */
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
