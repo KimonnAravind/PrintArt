@@ -2,18 +2,14 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
     app:cardCornerRadius="10dp">
-
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
 
         <ImageView
             android:id="@+id/images"
@@ -84,18 +80,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Quantity"
+            android:id="@+id/cartqty"
             android:layout_toRightOf="@id/SellerName"
             android:layout_below="@id/SellingPrices"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp"
             />
-
-
-
-
-
-
     </RelativeLayout>
-
-
 </androidx.cardview.widget.CardView>

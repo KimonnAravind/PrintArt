@@ -30,6 +30,7 @@ public class CartViewHolder extends RecyclerView.ViewHolder
         o=itemView.findViewById(R.id.OPrices);
         s=itemView.findViewById(R.id.SellingPrices);
         sn=itemView.findViewById(R.id.SellerName);
+        tt=itemView.findViewById(R.id.cartqty);
 
 
 

@@ -41,8 +41,9 @@ import io.paperdb.Paper;
     private TextView deliveryAdd;
     Button changeAdd, updateadd;
     private EditText deliveryless,pinc;
+    TextView total;
     DatabaseReference databaseReference, AddressReference;
-
+     int toot=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ import io.paperdb.Paper;
         updateadd = (Button) findViewById(R.id.addorub);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        total=(TextView)findViewById(R.id.total);
 
         String users = Paper.book().read(PaperStore.UserLoginID);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserCart")
@@ -77,6 +79,10 @@ import io.paperdb.Paper;
                 holder.o.setPaintFlags(holder.o.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
+                holder.tt.setText(model.getQuantity());
+
+                toot=toot+Integer.parseInt(model.getQuantity());
+                 total.setText("Total: "+toot);
             }
 
 
@@ -104,6 +110,8 @@ import io.paperdb.Paper;
         };
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+
+
     }
 
     @Override
@@ -180,7 +188,8 @@ import io.paperdb.Paper;
                 }
             }
         });
-    }
+
+        }
 
     /**
      * <p>Callback method to be invoked when an item in this view has been
