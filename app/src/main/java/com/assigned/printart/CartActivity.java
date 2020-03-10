@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,10 +69,8 @@ import io.paperdb.Paper;
                         .build();
         FirebaseRecyclerAdapter<DisplayProducts, CartViewHolder> adapter = new FirebaseRecyclerAdapter<DisplayProducts, CartViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final CartViewHolder holder, final int position, @NonNull DisplayProducts model)
+            protected void onBindViewHolder(@NonNull final CartViewHolder holder, final int position, @NonNull final DisplayProducts model)
             {
-
-
                 Picasso.get().load(model.getPro()).into(holder.imgvs);
                 holder.d.setText(model.getPdes());
                 holder.t.setText(model.getPame());
@@ -80,10 +79,22 @@ import io.paperdb.Paper;
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
                 holder.tt.setText(model.getQuantity());
+       //         toot=toot+Integer.parseInt(model.getQuantity());
+         //        total.setText("Total: "+toot);
 
-                toot=toot+Integer.parseInt(model.getQuantity());
-                 total.setText("Total: "+toot);
-            }
+             holder.itemView.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v)
+                 {
+                     Intent intent = new Intent(CartActivity.this, ShowDetailsActivity.class);
+                     intent.putExtra("Display", model.getProID());
+                     intent.putExtra("Category", model.getCatt());
+                     startActivity(intent);
+
+                 }
+             });
+                }
+
 
 
             @Override

@@ -286,22 +286,27 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     }
 
     private void addtocart(final DatabaseReference child, final DatabaseReference child1) {
-        Toast.makeText(this, "Here", Toast.LENGTH_SHORT).show();
 
-        child.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        child.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 child1.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
                     {
-                        HashMap<String,Object> Qtys= new HashMap<>();
-                        Qtys.put("quantity",qty);
-                        child1.updateChildren(Qtys);
-                        Toast.makeText(ShowDetailsActivity.this, "Added to wishlist!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ShowDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
                     }
                 });
+                HashMap<String,Object> Qtys= new HashMap<>();
+                Qtys.put("quantity",qty);
+                Qtys.put("catt",CategoryID);
+                child1.updateChildren(Qtys);
+                Toast.makeText(ShowDetailsActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
+                finish();
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
