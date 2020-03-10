@@ -293,17 +293,44 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 child1.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task)
+                    public void onComplete(@NonNull final Task<Void> task)
                     {
                         Toast.makeText(ShowDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+
+                            child1.child("quantity").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                                {
+                                if(dataSnapshot.exists())
+                                {
+                                    Toast.makeText(ShowDetailsActivity.this, "Exisit", Toast.LENGTH_SHORT).show();
+                                    child1.child("quantity").setValue(qty);
+                                }
+                                else
+                                {
+                                    Toast.makeText(ShowDetailsActivity.this, "Not", Toast.LENGTH_SHORT).show();
+                                    HashMap<String,Object> yts= new HashMap<>();
+                                    yts.put("quantity",qty);
+                                    yts.put("catt",CategoryID);
+                                    child1.updateChildren(yts);
+                                    Toast.makeText(ShowDetailsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+
+                                }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+
                     }
                 });
-                HashMap<String,Object> Qtys= new HashMap<>();
-                Qtys.put("quantity",qty);
-                Qtys.put("catt",CategoryID);
-                child1.updateChildren(Qtys);
-                Toast.makeText(ShowDetailsActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
-                finish();
+
+                /*
+                Toast.makeText(ShowDetailsActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();*/
+
             }
 
 
