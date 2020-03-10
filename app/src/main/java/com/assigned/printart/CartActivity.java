@@ -43,8 +43,8 @@ import io.paperdb.Paper;
     Button changeAdd, updateadd;
     private EditText deliveryless,pinc;
     TextView total;
-    DatabaseReference databaseReference, AddressReference;
-     int toot=0;
+    int xx=0,yy=0;
+        DatabaseReference databaseReference, AddressReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +60,8 @@ import io.paperdb.Paper;
         recyclerView.setLayoutManager(layoutManager);
         total=(TextView)findViewById(R.id.total);
 
-        String users = Paper.book().read(PaperStore.UserLoginID);
+
+  String     users = Paper.book().read(PaperStore.UserLoginID);
         databaseReference = FirebaseDatabase.getInstance().getReference().child("UserCart")
                 .child(users);
         AddressReference = FirebaseDatabase.getInstance().getReference().child("EndUsers").child(users);
@@ -79,21 +80,25 @@ import io.paperdb.Paper;
                 holder.s.setText("₹"+model.getPsp());
                 holder.sn.setText(model.getSeller());
                 holder.tt.setText(model.getQuantity());
-       //         toot=toot+Integer.parseInt(model.getQuantity());
-         //        total.setText("Total: "+toot);
+
+                xx=Integer.parseInt(model.getQuantity());
+                yy=yy+xx;
+                Toast.makeText(CartActivity.this, ""+yy, Toast.LENGTH_SHORT).show();
 
              holder.itemView.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v)
                  {
+
                      Intent intent = new Intent(CartActivity.this, ShowDetailsActivity.class);
                      intent.putExtra("Display", model.getProID());
                      intent.putExtra("Category", model.getCatt());
                      startActivity(intent);
-
                  }
              });
-                }
+
+
+            }
 
 
 
@@ -231,5 +236,11 @@ import io.paperdb.Paper;
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(this, "close", Toast.LENGTH_SHORT).show();
     }
 }

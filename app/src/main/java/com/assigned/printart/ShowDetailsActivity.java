@@ -1,6 +1,7 @@
 package com.assigned.printart;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.Toolbar;
@@ -47,6 +48,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -296,46 +298,14 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
                     public void onComplete(@NonNull final Task<Void> task)
                     {
                         Toast.makeText(ShowDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
-
-                            child1.child("quantity").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                                {
-                                if(dataSnapshot.exists())
-                                {
-                                    Toast.makeText(ShowDetailsActivity.this, "Exisit", Toast.LENGTH_SHORT).show();
-                                    child1.child("quantity").setValue(qty);
-                                }
-                                else
-                                {
-                                    Toast.makeText(ShowDetailsActivity.this, "Not", Toast.LENGTH_SHORT).show();
-                                    HashMap<String,Object> yts= new HashMap<>();
-                                    yts.put("quantity",qty);
-                                    yts.put("catt",CategoryID);
-                                    child1.updateChildren(yts);
-                                    Toast.makeText(ShowDetailsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-
-                                }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
-
-
+                        HashMap<String,Object> yts= new HashMap<>();
+                        yts.put("quantity",qty);
+                        yts.put("catt",CategoryID);
+                        child1.updateChildren(yts);
                     }
                 });
-
-                /*
-                Toast.makeText(ShowDetailsActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();*/
-
-            }
-
-
-
-            @Override
+}
+           @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
@@ -388,6 +358,14 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
      */
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    /*    Intent intent = new Intent(ShowDetailsActivity.this,CartActivity.class);
+        startActivity(intent);*/
 
     }
 }
