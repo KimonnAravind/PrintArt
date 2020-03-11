@@ -86,13 +86,14 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     Spinner spin;
     RecyclerView.LayoutManager manager;
     int x = 10, y, z;
-
+    String h="0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
         DisplayID = getIntent().getStringExtra("Display");
         CategoryID = getIntent().getStringExtra("Category");
+        h=getIntent().getStringExtra("IDs");
         t1 = (TextView) findViewById(R.id.type1);
         strs = Paper.book().read(PaperStore.UserLoginID);
         wishListReference = FirebaseDatabase.getInstance().getReference().child("UserCart").child(strs);
@@ -297,11 +298,20 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
                     @Override
                     public void onComplete(@NonNull final Task<Void> task)
                     {
-                        Toast.makeText(ShowDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
-                        HashMap<String,Object> yts= new HashMap<>();
-                        yts.put("quantity",qty);
-                        yts.put("catt",CategoryID);
-                        child1.updateChildren(yts);
+                        if(h=="1")
+                        {
+                            Toast.makeText(ShowDetailsActivity.this, "h", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(h.equals("0"))
+                        {
+                            Toast.makeText(ShowDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                            HashMap<String,Object> yts= new HashMap<>();
+                            yts.put("quantity",qty);
+                            child1.updateChildren(yts);
+                        }
+                        else
+                        {}
+
                     }
                 });
 }

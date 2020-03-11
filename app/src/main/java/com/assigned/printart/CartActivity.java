@@ -84,7 +84,7 @@ import io.paperdb.Paper;
                 xx=Integer.parseInt(model.getQuantity());
                 yy=yy+xx;
                 Toast.makeText(CartActivity.this, ""+yy, Toast.LENGTH_SHORT).show();
-
+                total.setText(""+yy);
              holder.itemView.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v)
@@ -92,7 +92,8 @@ import io.paperdb.Paper;
 
                      Intent intent = new Intent(CartActivity.this, ShowDetailsActivity.class);
                      intent.putExtra("Display", model.getProID());
-                     intent.putExtra("Category", model.getCatt());
+                     intent.putExtra("IDs","1");
+                     intent.putExtra("Category", model.get());
                      startActivity(intent);
                  }
              });
