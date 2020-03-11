@@ -70,7 +70,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     ViewPager products;
     RadioButton withf, withoutf;
     ProductAdapter aptr;
-    String qty="1";
+    String qty = "1";
     ProductFirebaseViewer productFirebaseViewer;
 
     DatabaseReference Productbanner, wishListReference;
@@ -86,14 +86,15 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
     Spinner spin;
     RecyclerView.LayoutManager manager;
     int x = 10, y, z;
-    String h="0";
+    String h = "0";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_details);
         DisplayID = getIntent().getStringExtra("Display");
         CategoryID = getIntent().getStringExtra("Category");
-        h=getIntent().getStringExtra("IDs");
+        h = getIntent().getStringExtra("IDs");
         t1 = (TextView) findViewById(R.id.type1);
         strs = Paper.book().read(PaperStore.UserLoginID);
         wishListReference = FirebaseDatabase.getInstance().getReference().child("UserCart").child(strs);
@@ -102,7 +103,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
         t2 = (TextView) findViewById(R.id.type2);
         t3 = (TextView) findViewById(R.id.type3);
         t4 = (TextView) findViewById(R.id.type4);
-        spin=(Spinner)findViewById(R.id.spinningID);
+        spin = (Spinner) findViewById(R.id.spinningID);
         spin.setOnItemSelectedListener(this);
 
         spin.setPrompt("QTY");
@@ -296,26 +297,22 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 child1.setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull final Task<Void> task)
-                    {
-                        if(h=="1")
-                        {
+                    public void onComplete(@NonNull final Task<Void> task) {
+                        if (h == "1") {
                             Toast.makeText(ShowDetailsActivity.this, "h", Toast.LENGTH_SHORT).show();
-                        }
-                        else if(h.equals("0"))
-                        {
+                        } else if (h.equals("0")) {
                             Toast.makeText(ShowDetailsActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
-                            HashMap<String,Object> yts= new HashMap<>();
-                            yts.put("quantity",qty);
+                            HashMap<String, Object> yts = new HashMap<>();
+                            yts.put("quantity", qty);
                             child1.updateChildren(yts);
+                        } else {
                         }
-                        else
-                        {}
 
                     }
                 });
-}
-           @Override
+            }
+
+            @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
@@ -353,10 +350,9 @@ public class ShowDetailsActivity extends AppCompatActivity implements ProductFir
      * @param id       The row id of the item that is selected
      */
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-    {
-    qty=parent.getSelectedItem().toString();
-        Toast.makeText(this, "QTY"+qty, Toast.LENGTH_SHORT).show();
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        qty = parent.getSelectedItem().toString();
+        Toast.makeText(this, "QTY" + qty, Toast.LENGTH_SHORT).show();
     }
 
     /**
