@@ -93,7 +93,7 @@ import io.paperdb.Paper;
                      Intent intent = new Intent(CartActivity.this, ShowDetailsActivity.class);
                      intent.putExtra("Display", model.getProID());
                      intent.putExtra("IDs","1");
-                     intent.putExtra("Category", model.get());
+                     intent.putExtra("Category", model.getCatt());
                      startActivity(intent);
                  }
              });
