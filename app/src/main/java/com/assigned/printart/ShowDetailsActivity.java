@@ -1,19 +1,8 @@
 package com.assigned.printart;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatRadioButton;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,34 +10,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.assigned.printart.Adapter.Adapter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.assigned.printart.Adapter.ProductAdapter;
-import com.assigned.printart.FirebListen.FirebaseViewer;
 import com.assigned.printart.FirebListen.ProductFirebaseViewer;
-import com.assigned.printart.Model.Banners;
-import com.assigned.printart.Model.DisplayCategory;
 import com.assigned.printart.Model.DisplayProducts;
-import com.assigned.printart.Model.NestedCategory;
 import com.assigned.printart.Model.ProductBanners;
 import com.assigned.printart.Paper.PaperStore;
 import com.assigned.printart.Transform.Transformer;
 import com.assigned.printart.Viewer.Bottom;
-import com.assigned.printart.Viewer.CategoryViewHolder;
-import com.assigned.printart.Viewer.NestedCategoryViewHolder;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,12 +47,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import io.paperdb.Paper;
 
-public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer, BottomNavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener
-{
+public class ShowDetailsActivity extends AppCompatActivity implements ProductFirebaseViewer, BottomNavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
     String DisplayID, CategoryID;
     ViewPager products;
     RadioButton withf, withoutf;

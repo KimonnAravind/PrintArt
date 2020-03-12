@@ -1,11 +1,5 @@
 package com.assigned.printart;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -18,6 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.assigned.printart.Model.DisplayProducts;
 import com.assigned.printart.Paper.PaperStore;
@@ -93,16 +92,11 @@ import io.paperdb.Paper;
                      Intent intent = new Intent(CartActivity.this, ShowDetailsActivity.class);
                      intent.putExtra("Display", model.getProID());
                      intent.putExtra("IDs","1");
-                     intent.putExtra("Category", model.getCatt());
+                     intent.putExtra("Category", model.getCategory());
                      startActivity(intent);
                  }
              });
-
-
             }
-
-
-
             @Override
             public long getItemId(int position) {
                 Log.e("one",""+position);
@@ -156,6 +150,7 @@ import io.paperdb.Paper;
                     });
                 } else {
                     deliveryless.setVisibility(View.VISIBLE);
+
                     updateadd.setVisibility(View.VISIBLE);
                     pinc.setVisibility(View.VISIBLE);
 
