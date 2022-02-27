@@ -14,11 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".CartActivity"></activity>
-        <activity android:name=".WListACtivity" />
-        <activity android:name=".ShowDetailsActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".DisplayProductActivity" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"

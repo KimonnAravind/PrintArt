@@ -1,9 +1,5 @@
 package com.assigned.printart.Model;
 
-import android.widget.Toast;
-
-import com.assigned.printart.ShowDetailsActivity;
-
 public class ProductBanners
 {
 public String image;

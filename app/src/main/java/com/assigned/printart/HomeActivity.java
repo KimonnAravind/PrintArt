@@ -189,10 +189,7 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(HomeActivity.this, DisplayProductActivity.class);
-                                intent.putExtra("Category", displayCategory.getCategoryID());
-                                intent.putExtra("TypeID", nestedCategory.getType());
-                                startActivity(intent);
+
                             }
                         });
                     }
@@ -385,13 +382,11 @@ public class HomeActivity extends AppCompatActivity implements FirebaseViewer, N
             startActivity(intent);
 
         } else if (id == R.id.action_cart) {
-            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
-            startActivity(intent);
+
         }
         else if(id==R.id.action_wishlist)
         {
-        Intent intent = new Intent(HomeActivity.this, WListACtivity.class);
-        startActivity(intent);
+
         }
            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layoutyes);
         drawerLayout.closeDrawer(GravityCompat.START);
